@@ -1,0 +1,35 @@
+.Position {
+    font-family: "Lucida Console", "Lucida Sans Typewriter", monaco;
+    font-size: 100%;
+    color: black;
+    background-color: black;
+    border: none;
+    border-collapse: collapse;
+    width: 8.8125px;
+    caret-color: black;
+}
+
+.Position:focus {
+    background-color: green;
+    caret-color: green;
+}
+
+.Hidden {
+    color: black;
+}
+
+.NotProt-NotHigh {
+    color: rgb(36, 216, 48);
+}
+
+.NotProt-High {
+    color: rgb(240, 24, 24);
+}
+
+.Prot-NotHigh {
+    color: rgb(88, 240, 240);
+}
+
+.Prot-High {
+    color: white;
+}

@@ -1,0 +1,9 @@
+.Screen {
+    width: 867px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid black;
+    background-color: #232423;
+    text-align: center;
+    border-collapse: collapse;
+} 
