@@ -86,153 +86,291 @@ const Screen = (props) => {
     )
 }
 
-const moveCursor = (positionNumber, direction) => {
+const nextPosition = (position, desloc) => {
 
-    if (direction === "Left"  ) {
-        if (positionNumber > 0) {
-            positionNumber -= 1;
-        } else {
-            positionNumber = 1919;
-        }
+    position += desloc;
+    
+    if (position < 0) {
+        position += 1920;
     }
 
-    if (direction === "Up") {
-        if (positionNumber > 79) {
-            positionNumber -= 80;
-        } else {
-            positionNumber += 1840;
-        }
+    if (position > 1919) {
+        position -= 1920;
     }
 
-    if (direction === "Down") {
-        if (positionNumber > 1839) {
-            positionNumber -= 1840;
-        } else {
-            positionNumber += 80;
-        }
-    }
-
-    if (direction === "Right") {
-        if (positionNumber >= 1919) {
-            positionNumber = 0;
-        } else {
-            positionNumber += 1;
-        }
-    }
-
-    return positionNumber;
+    return position;    
 }
 
-const focusOnNext = (event, positionNumber) => {
-    let row = parseInt(positionNumber / 80);
-    let col = parseInt(positionNumber - (row * 80));
-    if (((row * 80) + col) <= 1919) {
-        event.target.parentNode.parentNode.children[row].children[col].focus();
-        event.target.parentNode.parentNode.children[row].children[col].selectionStart = 0;
-        event.target.parentNode.parentNode.children[row].children[col].selectionEnd = 0;
-        return false;
+const currentFieldStart = (event, position) => {
+    if (isProtected(event.target)) {
+        return event.target;
+    }
+
+    for (let i = position; i >= 0; i--) {
+        if (isProtected(inputField(event, i))) {
+            return inputField(event, i + 1);
+        }
+    }
+    
+    return event.target;
+}
+
+const currentFieldEnd = (event, position) => {
+    if (isProtected(event.target)) {
+        return event.target;
+    }
+
+    for (let i = position + 1; i < 1920; i++) {
+        if (isProtected(inputField(event, i))) {
+            return inputField(event, (i === 0 ? 0 : i - 1));
+        }
+    }
+    
+    return event.target;
+}
+
+const previowsInputField = (event, position) => {
+    // WIP
+    let fieldStartPosition = getPosition(currentFieldStart(event, position));
+
+    // look until begin of the screen
+    for (let i = fieldStartPosition - 1; i >= 0; i--) {
+        if (!isProtected(inputField(event, i))) {
+            return inputField(event, i);
+        }
+    }
+
+    // look from the beginning
+    for (let i = 0; i < position + 1; i++) {
+        if (!isProtected(inputField(event, i))) {
+            return inputField(event, i);
+        }
+    }
+
+    return inputField(event, 0);
+}
+
+const nextInputField = (event, position) => {
+    console.log("event:" + event.target.id);
+    console.log("pos: " + position);
+    console.log("CFE:" + currentFieldEnd(event, position));
+    let fieldEndPosition = getPosition(currentFieldEnd(event, position));
+
+    // look until end of the screen
+    for (let i = fieldEndPosition + 1; i < 1920; i++) {
+        if (!isProtected(inputField(event, i))) {
+            return inputField(event, i);
+        }
+    }
+
+    // look from the beginning
+    for (let i = 0; i < position + 1; i++) {
+        if (!isProtected(inputField(event, i))) {
+            return inputField(event, i);
+        }
+    }
+
+    return inputField(event, 0);
+}
+
+const rcPosition = (position) => {
+    const row = parseInt(position / 80);
+    const col = parseInt(position - (row * 80));
+    return {
+        row: row,
+        col: col
     }
 }
 
-onkeydown = (event) => {
-    console.log(event.key);
+const focusOn = (event, positionNumber) => {
+    let rc = rcPosition(positionNumber);
+    event.target.parentNode.parentNode.children[rc.row].children[rc.col].focus();
+}
 
-    let positionNumber = event.target.id.replace("position", "") * 1;
+const inputField = (event, position) => {
+    const rc = rcPosition(position);
+    return event.target.parentNode.parentNode.children[rc.row].children[rc.col];
+}
 
-    if (event.key === "F1" 
-    ||  event.key === "F2" 
-    ||  event.key === "F3"
-    ||  event.key === "F4"
-    ||  event.key === "F5"
-    ||  event.key === "F6"
-    ||  event.key === "F7"
-    ||  event.key === "F8"
-    ||  event.key === "F9"
-    ||  event.key === "F10"
-    ||  event.key === "F11"
-    // ||  event.key === "F12"
-    ||  event.key === "PageUp" 
-    ||  event.key === "PageDown" 
-    ||  event.key === "Enter" 
-    ||  event.key === "Pause" ) {
+const isProtected = (inputField) => {
+    return (inputField.className.search(" Prot") >= 0 );
+}
+
+const isFunctionKey = (event) => {
+    const keyInputs = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", 
+                       "F11", "F12", "PageUp", "PageDown", "Enter", "Pause"];
+    return (keyInputs.indexOf(event.key) >= 0);
+}
+
+const handleFunctionKey = (event, position) => {
+    if (isFunctionKey) {
         console.log("key: " + event.key);
         return false;
     }
+}
 
-    if (event.key === "Home") {
-        positionNumber = 0;
-        focusOnNext(event, positionNumber);
-        return;
+const isSpecialKey = (event) => {
+    const specialKeys = [ "Unidentified"
+						, "Home"
+						, "Control"
+						, "Alt"
+						, "Shift"
+						, "Escape"
+						, "Tab"
+						, "CapsLock"
+						, "Delete"
+                        , "Insert"
+                        , "Backspace"
+						, "End" ];
+
+    return (specialKeys.indexOf(event.key) >= 0);
+}
+
+const deleteFieldValue = (event, position) => {
+
+    const insertModeOn = true;    
+    
+    if (isProtected(event.target)) {
+        return false;
+    } 
+
+    // if (insertModeOn) {
+    //     for (let i = 0; i < array.length; i++) {
+    //         let nextPosition
+    //         const element = array[i];
+            
+    //     }
+    // } else {
+    //     event.target.value = "";
+    // }
+}
+
+const handleBackspace = (event, position) => {
+    
+    if (isProtected(event.target)) {
+        return false;
     } else {
-        if (event.key === "Unidentified"
-        ||  event.key === "Control"
-        ||  event.key === "Alt"
-        ||  event.key === "Shift"
-        ||  event.key === "Escape"
-        ||  event.key === "Tab"
-        ||  event.key === "CapsLock"
-        ||  event.key === "Delete"
-        ||  event.key === "Insert"
-        ||  event.key === "End") {
-            return;
+        let nextPos = nextPosition(position, -1);
+        if (!isProtected(inputField(event, nextPos))) {
+            deleteFieldValue(inputField(event, nextPos));
+            inputField(event, nextPos).focus();
         }
     }
+}
+
+const handleSpecialKeys = (event, position) => {
+
+    if (event.key === "Home") {
+        nextInputField(event, 0).focus();
+        return;
+    }
+
+    if (event.key === "Delete") {
+        console.log("Delete: ");
+        return deleteFieldValue(event, position);
+    }
+
+    if (event.key === "Backspace") {
+        console.log("Backspace: ");
+        return handleBackspace(event, position);
+    }
+
+    if (event.key === "Tab") {
+        nextInputField(event, position).focus();
+        return false;
+    }
+
+    return;
+}
+
+const isArrowKey = (event) => {
+    const arrowKeys = [ "ArrowLeft"
+						, "ArrowRight"
+						, "ArrowUp"
+						, "ArrowDown"];
+
+    return (arrowKeys.indexOf(event.key) >= 0); 
+}
+
+const handleArrowKeys = (event, position) => {
 
     switch (event.key) {
         case "ArrowLeft":
-            positionNumber = moveCursor(positionNumber, "Left");
-            focusOnNext(event, positionNumber)
-            break;
+            console.log("left: " + position + " => " + nextPosition(position, -1));
+            return inputField(event, nextPosition(position, -1)).focus();
     
         case "ArrowRight":
-            positionNumber = moveCursor(positionNumber, "Right");
-            focusOnNext(event, positionNumber)
-            break;
+            return focusOn(event, nextPosition(position, 1));
 
         case "ArrowUp":
-            positionNumber = moveCursor(positionNumber, "Up");
-            focusOnNext(event, positionNumber)
-            break;
+            return focusOn(event, nextPosition(position, -80));
     
         case "ArrowDown":
-            positionNumber = moveCursor(positionNumber, "Down");
-            focusOnNext(event, positionNumber)
-            break;
-            
-        case "Backspace":
-            positionNumber = moveCursor(positionNumber, "Left");
-            event.target.value = " ";
-            event.target.focus();
-            return;
+            return focusOn(event, nextPosition(position, 80));
 
         default:
-            positionNumber = moveCursor(positionNumber, "Right");
+            console.log("Invalid arrow key: " + event.key);
             break;
     }
+}
 
-    const validChars = " âäàáãåçñ¢.<(+|&éêëèíîïìß!$*);¬-/ÂÄÀÁÃÅÇÑ¦,%_>?øÉÊËÈÍÎÏÌ`:#@'=\"Øabcdefghi«»ðýþ±°jklmnopqrªºæ¸Æ¤µ~stuvwxyz¡¿ÐÝÞ®^£¥·©§¶¼½¾[]¯¨´×{ABCDEFGHI­ôöòóõ}JKLMNOPQR¹ûüùúÿ\÷STUVWXYZ²ÔÖÒÓÕ0123456789³ÛÜÙÚ";
-    
+const getPosition = (inputField) => {
+    return inputField.id.replace("position", "") * 1
+}
+
+onkeydown = (event) => {
+    // console.log(event.key);
+    if (event.target.id.search("position") < 0 ){
+        return;
+    }
+
+    let position = getPosition(event.target);
+
+    if (isFunctionKey(event)) {
+        console.log("keyInput: " + event.key);
+        handleFunctionKey(event, position)
+        return false;
+    }
+
+    if (isSpecialKey(event)) {
+        console.log("SpecialKey: " + event.key);
+        return handleSpecialKeys(event, position);
+    }
+
+    if (isArrowKey(event)) {
+        console.log("arrowKey: " + event.key);
+        return handleArrowKeys(event, position);
+    }
+
+    // other keys
+    console.log("other key: " + event.key);
+    position = nextPosition(position, 1);
+
+    const validChars = " âäàáãåçñ¢.<(+|&éêëèíîïìß!$*);¬-/ÂÄÀÁÃ"
+                     + "ÅÇÑ¦,%_>?øÉÊËÈÍÎÏÌ`:#@'=\"Øabcdefghi«»ð"
+                     + "ýþ±°jklmnopqrªºæ¸Æ¤µ~stuvwxyz¡¿ÐÝÞ®^£¥"
+                     + "·©§¶¼½¾[]¯¨´×{ABCDEFGHI­ôöòóõ}JKLMNOPQR"
+                     + "¹ûüùúÿ\÷STUVWXYZ²ÔÖÒÓÕ0123456789³ÛÜÙÚ";
+                        
     if (validChars.search(event.key) >= 0) {
-        event.target.value = event.key;
+        if (!isProtected(event.target)) {
+            event.target.value = event.key;
+            if (isProtected(inputField(event, getPosition(event.target) + 1))) {
+                nextInputField(event, position).focus();
+                return;
+            }
+        } else {
+            return false;
+        }
     } else {
         return;
     }
 
-    return focusOnNext(event, positionNumber);
+    return focusOn(event, position);
 }
 
 onkeyup = (event) => {
-    // if ("a" === "a") {
-        return;
-    // }
-
-    // let numberPosition = event.target.id.replace("position", "") * 1;
-    // let row = parseInt(numberPosition / 80);
-    // let col = parseInt(numberPosition - (row * 80));
-
-    // if (((row * 24) + col) <= 1919) {
-    //     event.target.parentNode.parentNode.children[row].children[col].value = event.key;
-    // }
+    return;
 }
 
 export default Screen;
