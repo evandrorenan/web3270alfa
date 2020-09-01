@@ -151,9 +151,6 @@ const previowsInputField = (event, position) => {
 }
 
 const nextInputField = (event, position) => {
-    console.log("event:" + event.target.id);
-    console.log("pos: " + position);
-    console.log("CFE:" + currentFieldEnd(event, position));
     let fieldEndPosition = getPosition(currentFieldEnd(event, position));
 
     // look until end of the screen
@@ -204,7 +201,6 @@ const isFunctionKey = (event) => {
 
 const handleFunctionKey = (event, position) => {
     if (isFunctionKey) {
-        console.log("key: " + event.key);
         return false;
     }
 }
@@ -226,22 +222,47 @@ const isSpecialKey = (event) => {
     return (specialKeys.indexOf(event.key) >= 0);
 }
 
-const deleteFieldValue = (event, position) => {
+const handleSpecialKeys = (event, position) => {
+
+    if (event.key === "Home") {
+        nextInputField(event, 0).focus();
+        return;
+    }
+
+    if (event.key === "Delete") {
+        deleteFieldValue(inputField(event, position));
+        return false;
+    }
+
+    if (event.key === "Backspace") {
+        handleBackspace(event, position);
+        return false;
+    }
+
+    if (event.key === "Tab") {
+        nextInputField(event, position).focus();
+        return false;
+    }
+
+    return;
+}
+
+const deleteFieldValue = (inputField, position) => {
 
     const insertModeOn = true;    
     
-    if (isProtected(event.target)) {
+    if (isProtected(inputField)) {
         return false;
     } 
 
-    // if (insertModeOn) {
+    // if (insertModeOn) {  WIP
     //     for (let i = 0; i < array.length; i++) {
     //         let nextPosition
     //         const element = array[i];
             
     //     }
     // } else {
-    //     event.target.value = "";
+        return inputField.value = "";
     // }
 }
 
@@ -258,31 +279,6 @@ const handleBackspace = (event, position) => {
     }
 }
 
-const handleSpecialKeys = (event, position) => {
-
-    if (event.key === "Home") {
-        nextInputField(event, 0).focus();
-        return;
-    }
-
-    if (event.key === "Delete") {
-        console.log("Delete: ");
-        return deleteFieldValue(event, position);
-    }
-
-    if (event.key === "Backspace") {
-        console.log("Backspace: ");
-        return handleBackspace(event, position);
-    }
-
-    if (event.key === "Tab") {
-        nextInputField(event, position).focus();
-        return false;
-    }
-
-    return;
-}
-
 const isArrowKey = (event) => {
     const arrowKeys = [ "ArrowLeft"
 						, "ArrowRight"
@@ -296,7 +292,6 @@ const handleArrowKeys = (event, position) => {
 
     switch (event.key) {
         case "ArrowLeft":
-            console.log("left: " + position + " => " + nextPosition(position, -1));
             return inputField(event, nextPosition(position, -1)).focus();
     
         case "ArrowRight":
@@ -319,7 +314,6 @@ const getPosition = (inputField) => {
 }
 
 onkeydown = (event) => {
-    // console.log(event.key);
     if (event.target.id.search("position") < 0 ){
         return;
     }
@@ -327,23 +321,20 @@ onkeydown = (event) => {
     let position = getPosition(event.target);
 
     if (isFunctionKey(event)) {
-        console.log("keyInput: " + event.key);
         handleFunctionKey(event, position)
         return false;
     }
 
     if (isSpecialKey(event)) {
-        console.log("SpecialKey: " + event.key);
-        return handleSpecialKeys(event, position);
+        handleSpecialKeys(event, position);
+        return false;
     }
 
     if (isArrowKey(event)) {
-        console.log("arrowKey: " + event.key);
         return handleArrowKeys(event, position);
     }
 
     // other keys
-    console.log("other key: " + event.key);
     position = nextPosition(position, 1);
 
     const validChars = " âäàáãåçñ¢.<(+|&éêëèíîïìß!$*);¬-/ÂÄÀÁÃ"
