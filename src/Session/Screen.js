@@ -133,17 +133,17 @@ const previowsInputField = (event, position) => {
     // WIP
     let fieldStartPosition = getPosition(currentFieldStart(event, position));
 
-    // look until begin of the screen
+    // look from current position until the beginning
     for (let i = fieldStartPosition - 1; i >= 0; i--) {
         if (!isProtected(inputField(event, i))) {
-            return inputField(event, i);
+            return currentFieldStart(event, i);
         }
     }
 
-    // look from the beginning
-    for (let i = 0; i < position + 1; i++) {
+    // look from the end until current position
+    for (let i = 1919; i >= position; i--) {
         if (!isProtected(inputField(event, i))) {
-            return inputField(event, i);
+            return currentFieldStart(event, i);
         }
     }
 
@@ -153,14 +153,14 @@ const previowsInputField = (event, position) => {
 const nextInputField = (event, position) => {
     let fieldEndPosition = getPosition(currentFieldEnd(event, position));
 
-    // look until end of the screen
+    // loop from current position until end of the screen
     for (let i = fieldEndPosition + 1; i < 1920; i++) {
         if (!isProtected(inputField(event, i))) {
             return inputField(event, i);
         }
     }
 
-    // look from the beginning
+    // look from the beginning until current position
     for (let i = 0; i < position + 1; i++) {
         if (!isProtected(inputField(event, i))) {
             return inputField(event, i);
@@ -230,7 +230,7 @@ const handleSpecialKeys = (event, position) => {
     }
 
     if (event.key === "Delete") {
-        deleteFieldValue(inputField(event, position));
+        deleteFieldValue(event, position);
         return false;
     }
 
@@ -240,30 +240,30 @@ const handleSpecialKeys = (event, position) => {
     }
 
     if (event.key === "Tab") {
-        nextInputField(event, position).focus();
+        if (event.shiftKey) {
+            previowsInputField(event, position).focus();
+        } else {
+            nextInputField(event, position).focus();
+        }      
         return false;
     }
 
     return;
 }
 
-const deleteFieldValue = (inputField, position) => {
+const deleteFieldValue = (event, position) => {
 
-    const insertModeOn = true;    
-    
-    if (isProtected(inputField)) {
+    if (isProtected(event.target)) {
         return false;
     } 
 
-    // if (insertModeOn) {  WIP
-    //     for (let i = 0; i < array.length; i++) {
-    //         let nextPosition
-    //         const element = array[i];
-            
-    //     }
-    // } else {
-        return inputField.value = "";
-    // }
+    let lastFieldPos = getPosition(currentFieldEnd(event, position));
+
+    for (let i = position; i < lastFieldPos; i++) {
+        inputField(event, i).value = inputField(event, i + 1).value;
+        inputField(event, i + 1).value = "";
+    }
+    inputField(event, lastFieldPos).value = "";
 }
 
 const handleBackspace = (event, position) => {
@@ -271,10 +271,10 @@ const handleBackspace = (event, position) => {
     if (isProtected(event.target)) {
         return false;
     } else {
-        let nextPos = nextPosition(position, -1);
-        if (!isProtected(inputField(event, nextPos))) {
-            deleteFieldValue(inputField(event, nextPos));
-            inputField(event, nextPos).focus();
+        let previowsPos = nextPosition(position, -1);
+        if (!isProtected(inputField(event, previowsPos))) {
+            deleteFieldValue(event, previowsPos);
+            inputField(event, previowsPos).focus();
         }
     }
 }
@@ -341,7 +341,7 @@ onkeydown = (event) => {
                      + "ÅÇÑ¦,%_>?øÉÊËÈÍÎÏÌ`:#@'=\"Øabcdefghi«»ð"
                      + "ýþ±°jklmnopqrªºæ¸Æ¤µ~stuvwxyz¡¿ÐÝÞ®^£¥"
                      + "·©§¶¼½¾[]¯¨´×{ABCDEFGHI­ôöòóõ}JKLMNOPQR"
-                     + "¹ûüùúÿ\÷STUVWXYZ²ÔÖÒÓÕ0123456789³ÛÜÙÚ";
+                     + "¹ûüùúÿ\\÷STUVWXYZ²ÔÖÒÓÕ0123456789³ÛÜÙÚ";
                         
     if (validChars.search(event.key) >= 0) {
         if (!isProtected(event.target)) {
