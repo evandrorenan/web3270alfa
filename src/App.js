@@ -1,53 +1,46 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
+import axios from 'axios';
 
 import Screen from './Session/Screen';
 
-function App() {
-  
-  const fieldList = [
-    { startRow: 0,
-      startColumn: 0,
-      text: '*****************************             +----------------------------------+  ****************---**********             | IP ADDRESS   : 192.168.58.175    |  *********-    ______  *******             | LUNAME       : OA2BRQAJ          |  *****_-    -**********- *****             | PORT ADDRESS : 43740             |  **-      _______    *********             | DATA / HORA  : 08/30/20 16:56:44 |  *****-  **********-    ******             +----------------------------------+  ****-  **************-   ****                                                   ****-  ***************-   ***                                                   *****- ****************-  ***    *****                *                         ******- *******-  ****-  ****    *    *               *                         ******** ******-  *** *******    *    *  * *  **    ***   **    **    **   **   ***********- **-  ***********    *****   **     *  *  *  *  *  *     *    *  *  ***********- **-  ***********    *    *  *    ***  *  *  ****   **   *    *  *  ***********- **-  ***********    *    *  *   *  *  *  *  *        *  *    *  *  ***********- **-  ***********    *****   *    ***   ***   **    **    **   **                                                                                   +----------------------------------------------------------------------------+  | Esta conexão é específica e de uso exclusivo de empresas via Rede Empresa  |  | Caso  haja  alguma  irregularidade  nas  informações  apresentadas,  favor |  | contactar  nossa  Central  de  Atendimento  DITI:  (0 xx 11)  4197-2222    |  | Empresas                                                                   |  +----------------------------------------------------------------------------+ ',
-      fieldLength: 1840,
-      isProtected: true,
-      isHidden: false,
-      isHighLight: false
-    } ,
-    { startRow: 23,
-      startColumn: 29,
-      text: '__________',
-      fieldLength: 10,
-      isProtected: false,
-      isHidden: false,
-      isHighLight: false
-    } ,
-    { startRow: 23,
-      startColumn: 49,
-      text: '..........',
-      fieldLength: 10,
-      isProtected: false,
-      isHidden: false,
-      isHighLight: false
-    },
-    { startRow: 23,
-      startColumn: 69,
-      text: '==========',
-      fieldLength: 10,
-      isProtected: false,
-      isHidden: false,
-      isHighLight: false
-    }
-  ]
+class App extends Component {
 
-  return (
-    <div className="App">
-      <Screen 
-        fieldList={fieldList}
-        onkeyup={onkeyup}
-        onkeydown={onkeydown} />
-    </div>
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: [
+        { startRow: 1,
+          startColumn: 1,
+          text: 'Connecting...',
+          length: 1920,
+          protected: true,
+          hidden: false,
+          highLight: false
+        }
+      ],
+      sessionId: ""
+    };
+  }
+
+  componentDidMount(){
+    axios.get("http://localhost:8080/getScreen", { crossdomain: true })
+    .then( response => {
+      console.log(response);
+      this.setState(response.data);
+    });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Screen 
+          fieldList={this.state.fields}
+          onkeyup={onkeyup}
+          onkeydown={onkeydown} />
+      </div>
     );
   }
+}
   
-  export default App;
+export default App;

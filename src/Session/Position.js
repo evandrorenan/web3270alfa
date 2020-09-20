@@ -12,23 +12,21 @@ const Position = (props) => {
      let fieldIndex = 0;
 
      for (let i = 0; i < props.fieldList.length; i++) {
-          let fieldPos = ((props.fieldList[i].startRow * 80)+ props.fieldList[i].startColumn);
-          if (pos >= fieldPos && pos < fieldPos + props.fieldList[i].fieldLength ) {
+          let fieldPos = (((props.fieldList[i].startRow - 1) * 80) + (props.fieldList[i].startColumn - 1));
+          if (pos >= fieldPos && pos < fieldPos + props.fieldList[i].length ) {
                fieldIndex = i;
-               // console.log("fieldIndex: " + fieldIndex + " - " + props.fieldList[i].text);
+               console.log("fieldIndex: " + fieldIndex + " - " + props.fieldList[i].text);
           }
      } 
 
      let className = "Position ";
 
-     if (props.fieldList[fieldIndex].isHidden) {
+     if (props.fieldList[fieldIndex].hidden) {
           className += " Hidden";
      } else {
-          className += props.fieldList[fieldIndex].isProtected ? " Prot-" : " NotProt-";
-          className += props.fieldList[fieldIndex].isHighLight ? "High" : "NotHigh";
+          className += props.fieldList[fieldIndex].protected ? " Prot-" : " NotProt-";
+          className += props.fieldList[fieldIndex].highLight ? "High" : "NotHigh";
      }
-
-     console.log("sc: " + className);
 
      return <input 
           key={keyName}
@@ -39,7 +37,7 @@ const Position = (props) => {
           onKeyDown={props.onkeydown}
           onFocus={handleFocus}
           id={keyName}
-          defaultValue={props.content} />;     
+          value={props.content} />;     
 }
 
 export default Position;
