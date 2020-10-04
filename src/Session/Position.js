@@ -2,6 +2,10 @@ import React from 'react';
 
 import './Position.css'
 
+const onchange = (event) => {
+     console.log("handleFocus");
+}
+
 const handleFocus = (event) => {
      console.log("handleFocus");
 }
@@ -28,10 +32,13 @@ const Position = (props) => {
           className += props.fieldList[fieldIndex].highLight ? "High" : "NotHigh";
      }
 
+     console.log("keyName:" + keyName);
+
      return <input 
           key={keyName}
           type="text" 
           className={className}
+          onChange={onchange}
           maxLength="1" 
           onKeyUp={props.onkeyup}
           onKeyDown={props.onkeydown}

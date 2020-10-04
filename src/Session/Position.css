@@ -14,7 +14,11 @@
     caret-color: green;
 }
 
-.Hidden {
+.NotProt-Hidden {
+    color: grey;
+}
+
+.Prot-Hidden {
     color: black;
 }
 
@@ -32,4 +36,10 @@
 
 .Prot-High {
     color: white;
+}
+
+.Mod {
+    border-width:2px;
+    border-style:none none dotted none;
+    border-color:grey;
 }

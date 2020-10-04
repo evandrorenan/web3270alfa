@@ -18,29 +18,3 @@ const HandleType = (event, position) => {
 }
 
 export default HandleType;
-
-
-//    // other keys
-//    position = nextPosition(position, 1);
-
-//    const validChars = " âäàáãåçñ¢.<(+|&éêëèíîïìß!$*);¬-/ÂÄÀÁÃ"
-//                     + "ÅÇÑ¦,%_>?øÉÊËÈÍÎÏÌ`:#@'=\"Øabcdefghi«»ð"
-//                     + "ýþ±°jklmnopqrªºæ¸Æ¤µ~stuvwxyz¡¿ÐÝÞ®^£¥"
-//                     + "·©§¶¼½¾[]¯¨´×{ABCDEFGHI­ôöòóõ}JKLMNOPQR"
-//                     + "¹ûüùúÿ\\÷STUVWXYZ²ÔÖÒÓÕ0123456789³ÛÜÙÚ";
-                       
-//    if (validChars.search(event.key) >= 0) {
-//        if (!isProtected(event.target)) {
-//            event.target.value = event.key;
-//            if (isProtected(inputField(event, getPosition(event.target) + 1))) {
-//                nextInputField(event, position).focus();
-//                return;
-//            }
-//        } else {
-//            return false;
-//        }
-//    } else {
-//        return;
-//    }
-
-//    return focusOn(event, position);

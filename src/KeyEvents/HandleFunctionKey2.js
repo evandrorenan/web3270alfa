@@ -1,8 +1,43 @@
 import { getPosition   } from "./InputFieldInfo"
 
-const HandleFunctionKey = (event, position, screenState) => {
-        let request = {};
-        
+const HandleFunctionKey2 = (event, position, screenState) => {
+//         let request = {};
+
+//         screenState: {…}
+//         ​
+//         cursorPos: 0
+//         ​
+//         fieldPos: (3) […]
+//         ​​
+//         0: 1
+//         ​​
+//         1: 1868
+//         ​​
+//         2: 1919
+//         ​​
+//         length: 3
+//         ​​
+//         <prototype>: []
+//         ​
+//         positions: (1920) […]
+//         ​
+//         sessionId: "2020-09-24 21:31:57.305"        
+// ;
+//         let newContent = [];
+
+//         screenState.positions;
+        for ()
+
+        for (let i = 0; i < 1920; i++) {
+            if (positions[i])
+
+            if (!positions[i].protected) {
+                if (!positions[i - 1].protected) {
+                    newContent[index] += 
+                }
+            }
+        }
+
         request.sessionId = screenState.sessionId;
         let functionKey = setPfkey(event);
         if (functionKey === "") {
@@ -61,4 +96,4 @@ const setPfkey = (event) => {
     }
 }
 
-export default HandleFunctionKey;
+export default HandleFunctionKey2;

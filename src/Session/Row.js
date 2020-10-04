@@ -17,8 +17,9 @@ const Row = (props) => {
                     onkeyup={props.onkeyup}
                     onKeyDown={props.onkeydown}
                     rowNumber={props.rowNumber} 
-                    colNumber={index} />})}
-
+                    colNumber={index} />
+                })
+            }
         </p>
     )
 }
