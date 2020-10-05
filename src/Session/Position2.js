@@ -1,19 +1,19 @@
-import React, {Component}     from 'react';
+import React, {PureComponent}     from 'react';
 import { isProtected }        from "../KeyEvents/InputFieldInfo";
 import { isTypedChar }        from "../KeyEvents/KeyTipe";
 import SessionContext         from "../context/sessionContext";
 
 import './Position.css'
 
-class Position2 extends Component {
+class Position2 extends PureComponent {
 
      // positionAttributes sample:
      // {"positionId":  0, "text": "C", "protected": false, "hidden": false, "highLight": false }
 
      constructor(props){
           super();
-          if (props.index === 1) {
-               console.log ("constructor key: " + props.index);
+          if (props.id === "Position1") {
+               console.log ("constructor key: " + props.id);
           }
 
           this.positionRef = React.createRef();
@@ -31,11 +31,11 @@ class Position2 extends Component {
           }
 
           this.state.className = "Position ";
-          this.state.className += this.state.positionAttributes.protected ? " Prot-" : " NotProt-";
 
           if (this.state.positionAttributes.hidden) {
                this.state.className += " Hidden";
           } else {
+               this.state.className += this.state.positionAttributes.protected ? " Prot-" : " NotProt-";
                this.state.className += this.state.positionAttributes.highLight ? "High" : "NotHigh";
           }       
      }
@@ -65,12 +65,12 @@ class Position2 extends Component {
      }
 
      render() {
-          if (this.props.index === 1) {
-               console.log ("key: " + this.props.index);
+          if (this.props.id === "Position100") {
+               console.log ("Position key: " + this.props.id);
           }
          return ( 
                <input 
-                    key={"Position" + this.props.index}
+                    key={"Position" + this.props.id}
                     id={"Position" + this.state.positionAttributes.positionId}
                     type="text" 
                     ref={this.positionRef}

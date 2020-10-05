@@ -14,7 +14,6 @@ class Screen2 extends Component {
             this.positionRef.push(React.createRef());
         }
 
-        this.refreshIndicator = 1;
         this.state = {
             "positions": [
                 {"positionId":  0, "text": "C", "protected": false, "hidden": false, "highLight": false }
@@ -29,7 +28,9 @@ class Screen2 extends Component {
             ,   {"positionId":  9, "text": "g", "protected": false, "hidden": false, "highLight": false }
             ,   {"positionId": 10, "text": ".", "protected": false, "hidden": false, "highLight": false }
             ,   {"positionId": 11, "text": ".", "protected": false, "hidden": false, "highLight": false }
-            ,   {"positionId": 12, "text": ".", "protected": false, "hidden": false, "highLight": false }]};
+            ,   {"positionId": 12, "text": ".", "protected": false, "hidden": false, "highLight": false }],
+            keyNameSufix : 1
+        };
     }
 
     componentDidMount(){
@@ -43,10 +44,9 @@ class Screen2 extends Component {
     refreshScreen = (response) => {
         console.log(response.data)
         if (this.state.positions.length < 1000) {
-            this.refreshIndicator = -this.refreshIndicator;
-            debugger;
             let localState = this.state;
             localState.positions = response.data.positions;
+            localState.keyNameSufix = - localState.keyNameSufix;
             this.setState(localState); 
         }
     }
@@ -75,24 +75,41 @@ class Screen2 extends Component {
         let positions = [];
         let rows = []
 
-        console.log("refresh: " + this.refreshIndicator);
-        for (let index = 0; index < 1920; index++) {
-            let position = (<Position2 key={index}
-                            rowNumber={Math.floor(index / 80)} 
-                            onkeydown={this.onkeydown}
-                            position={this.state.positions[index]}
-                            ref={this.positionRef[index]}
-                            index={index * this.refreshIndicator} />);
-            positions.push(position);
+        console.log("refresh: " + this.state.keyNameSufix);
 
-            if (Math.floor(index / 80 ) === index / 80 && index !== 0) {
-                rows.push(
-                    <p className="Row" key={"row" + index} >
-                        {positions.map((position) => {return position})}
-                    </p>);
-                positions = [];
-            }
+
+        for (let index = 0; index < 1920; index++) {
+            let position = (<Position2 
+                                key={(index + 1) * this.state.keyNameSufix }
+                                id={"Position" + (index * this.state.keyNameSufix)}
+                                rowNumber={Math.floor(index / 80)} 
+                                onkeydown={this.onkeydown}
+                                position={this.state.positions[index]}
+                                ref={this.positionRef[index]} />);
+
+            // if (Math.floor(index / 80 ) === index / 80 && index !== 0) {
+            //     rows.push(
+            //         <p className="Row" key={"row" + index + this.state.keyNameSufix} >
+            //             {positions.map((position) => {return position})}
+            //         </p>);
+            //     positions = [];
+            // }
+            positions.push(position);
         }
+        // rows.push(
+        //     <p className="Row" key={"lastrow" + this.state.keyNameSufix} >
+        //         {positions.map((position) => {return position})}
+        //     </p>);
+
+        for (let index = 0; index < 24; index++) {
+            rows.push( 
+                <p className="Row" key={"row" + index} id={"row" + index}>
+                    { positions.slice (
+                        ( index * 80 ), (index + 1) * 80 - 1 )}
+                </p>)
+        }
+
+
 
         return <div className="Screen" key="screen">
                     {rows.map((row) => {return row})}
