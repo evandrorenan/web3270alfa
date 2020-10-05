@@ -4,6 +4,12 @@
     margin: 10px;
     border: 2px solid black;
     background-color: #232423;
-    text-align: center;
+    text-align: left;
     border-collapse: collapse;
+}
+
+.Row {
+    line-height: 0.00001;
+    padding: 0px;
+    margin: 0px;
 } 

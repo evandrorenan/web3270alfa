@@ -30,10 +30,10 @@ class Screen extends Component {
     }
 
     componentDidMount(){
-        axios.get ("http://localhost:8080/getScreen", { crossdomain: true })
-             .then ( response => {
-                 this.refreshScreen(response);
-            });
+        // axios.get ("http://localhost:8080/getScreen", { crossdomain: true })
+        //      .then ( response => {
+        //          this.refreshScreen(response);
+        //     });
     }
 
     refreshScreen = (response) => {

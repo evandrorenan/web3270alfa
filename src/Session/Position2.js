@@ -7,26 +7,49 @@ import './Position.css'
 
 class Position2 extends Component {
 
+     // positionAttributes sample:
+     // {"positionId":  0, "text": "C", "protected": false, "hidden": false, "highLight": false }
+
      constructor(props){
           super();
+          if (props.index === 1) {
+               console.log ("constructor key: " + props.index);
+          }
 
-          this.state = { className:"Position" };
+          this.positionRef = React.createRef();
+          this.focusPositionRef = this.focusPositionRef.bind(this);
 
-          let position = this.context.screenPositions[
-               this.props.rowNumber * 80 + this.props.colNumber];
+          this.state = { positionAttributes :           
+                         { "positionId": props.colNumber, 
+                           "text": " ", 
+                           "protected": false,
+                           "hidden": false, 
+                           "highLight": false }};
 
-          this.state.className += position.protected ? " Prot-" : " NotProt-";
+          if (props.position) {
+               this.state = { positionAttributes: props.position };
+          }
 
-          if (position.hidden) {
+          this.state.className = "Position ";
+          this.state.className += this.state.positionAttributes.protected ? " Prot-" : " NotProt-";
+
+          if (this.state.positionAttributes.hidden) {
                this.state.className += " Hidden";
           } else {
-               this.state.className += position.highLight ? "High" : "NotHigh";
-          }
-          this.state.props = props;
+               this.state.className += this.state.positionAttributes.highLight ? "High" : "NotHigh";
+          }       
      }
 
+     focusPositionRef() {
+          this.positionRef.current.focus();
+     }
+
+     onchange = (event) => {
+          console.log("handleFocus");
+     }
+     
      onkeydown = (event) => {
-          let returnValue = this.state.props.onkeydown(event);
+          let returnValue = this.props.onkeydown(event);
 
           const localState = this.state;
 
@@ -34,7 +57,7 @@ class Position2 extends Component {
           && !isProtected(event.target) 
           && event.target.className.search(" Mod") < 0) {
                localState.className += " Mod";
-               localState.props.pos.text = event.key;
+               localState.positionAttributes.text = event.key;
                this.setState(localState);               
           }
 
@@ -42,21 +65,20 @@ class Position2 extends Component {
      }
 
      render() {
-
-          let position = this.props.rowNumber * 80 + this.props.colNumber;
-          return ( 
-               <SessionContext.Consumer>
-                    {(context) => 
-                         <input 
-                              key={position}
-                              id={"position" + position}
-                              type="text" 
-                              className={this.state.className}
-                              maxLength="1" 
-                              onKeyDown={context.onkeydown}
-                              value={context.screenPositions[position].text} />
-                    }
-               </SessionContext.Consumer>
+          if (this.props.index === 1) {
+               console.log ("key: " + this.props.index);
+          }
+         return ( 
+               <input 
+                    key={"Position" + this.props.index}
+                    id={"Position" + this.state.positionAttributes.positionId}
+                    type="text" 
+                    ref={this.positionRef}
+                    className={this.state.className}
+                    maxLength="1" 
+                    onKeyDown={this.onkeydown}
+                    onChange={this.onchange}
+                    value={this.state.positionAttributes.text} />
           )    
      }
 }
