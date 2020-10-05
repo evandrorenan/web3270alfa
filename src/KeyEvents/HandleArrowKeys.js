@@ -2,25 +2,33 @@ import { focusOn        } from "./InputFieldAction";
 import { nextPosition   } from "./InputFieldInfo";
 import { inputField     } from "./InputFieldInfo";
 
-const HandleArrowKeys = (event, position) => {
+const HandleArrowKeys = (event, position, positionRefs) => {
 
+    let nextFocus;
     switch (event.key) {
         case "ArrowLeft":
-            return inputField(event, nextPosition(position, -1)).focus();
+            nextFocus = position === 0 ? 1919 : position - 1;
+            break;
     
         case "ArrowRight":
-            return focusOn(event, nextPosition(position, 1));
+            nextFocus = position === 1919 ? 0 : position + 1;
+            break;
 
         case "ArrowUp":
-            return focusOn(event, nextPosition(position, -80));
+            nextFocus = position - 80 + (position < 80 ? 1920 : 0);
+            break;
     
         case "ArrowDown":
-            return focusOn(event, nextPosition(position, 80));
-
+            nextFocus = position + 80 - (position >= 23 * 80 ? 1920 : 0);
+            break;
+    
         default:
             console.log("Invalid arrow key: " + event.key);
             break;
     }
+
+    positionRefs[nextFocus].current.focusPositionRef();
+    return;
 }
 
 export default HandleArrowKeys;

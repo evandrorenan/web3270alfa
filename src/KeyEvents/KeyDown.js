@@ -8,8 +8,11 @@ import { isArrowKey }       from "./KeyTipe";
 import { isTypedChar }      from "./KeyTipe";
 import { getPosition }      from "./InputFieldInfo";
 
-const KeyDown = (event, screenState) => {
-    if (event.target.id.search("position") < 0 ){
+const KeyDown = (event, screenState, positionRefs) => {
+    if (event.target.id.search("Position") < 0 ){
+        if (isSpecialKey(event)) {
+            return false;
+        }
         return;
     }
 
@@ -20,12 +23,12 @@ const KeyDown = (event, screenState) => {
     }
 
     if (isSpecialKey(event)) {
-        handleSpecialKeys(event, position);
+        handleSpecialKeys(event, position, positionRefs);
         return false;
     }
 
     if (isArrowKey(event)) {
-        return handleArrowKeys(event, position);
+        return handleArrowKeys(event, position, positionRefs);
     }
 
     if (isTypedChar(event)) {

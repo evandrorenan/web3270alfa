@@ -33,7 +33,7 @@ class Position2 extends PureComponent {
           this.state.className = "Position ";
 
           if (this.state.positionAttributes.hidden) {
-               this.state.className += " Hidden";
+               this.state.className += "Prot-     Hidden";
           } else {
                this.state.className += this.state.positionAttributes.protected ? " Prot-" : " NotProt-";
                this.state.className += this.state.positionAttributes.highLight ? "High" : "NotHigh";
@@ -47,11 +47,14 @@ class Position2 extends PureComponent {
      onchange = (event) => {
           console.log("handleFocus");
      }
+     onkeydown = (event) => {
+          return false;
+     }     
      
      onkeydown = (event) => {
           let returnValue = this.props.onkeydown(event);
 
-          const localState = this.state;
+          const localState = {...this.state};
 
           if (isTypedChar(event) 
           && !isProtected(event.target) 
@@ -65,9 +68,6 @@ class Position2 extends PureComponent {
      }
 
      render() {
-          if (this.props.id === "Position100") {
-               console.log ("Position key: " + this.props.id);
-          }
          return ( 
                <input 
                     key={"Position" + this.props.id}
@@ -77,6 +77,7 @@ class Position2 extends PureComponent {
                     className={this.state.className}
                     maxLength="1" 
                     onKeyDown={this.onkeydown}
+                    onKeyUp={this.onkeyup}
                     onChange={this.onchange}
                     value={this.state.positionAttributes.text} />
           )    

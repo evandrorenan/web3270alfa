@@ -27,7 +27,7 @@ export const currentFieldEnd = (event, position) => {
 }
 
 export const getPosition = (inputField) => {
-    return inputField.id.replace("position", "") * 1
+    return inputField.id.replace("Position", "") * 1
 }
 
 export const inputField = (event, position) => {

@@ -5,7 +5,7 @@ import { nextPosition }         from "./InputFieldInfo";
 import { inputField }           from "./InputFieldInfo";
 import { deleteFieldValue }     from "./InputFieldAction";
 
-const HandleSpecialKeys = (event, position) => {
+const HandleSpecialKeys = (event, position, positionRefs) => {
 
     if (event.key === "Home") {
         nextInputField(event, 0).focus();
