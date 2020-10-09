@@ -31,11 +31,11 @@ class Position2 extends PureComponent {
           }
 
           this.state.className = "Position ";
+          this.state.className += this.state.positionAttributes.protected ? " Prot-" : " NotProt-";
 
           if (this.state.positionAttributes.hidden) {
-               this.state.className += "Prot-     Hidden";
+               this.state.className += "Hidden";
           } else {
-               this.state.className += this.state.positionAttributes.protected ? " Prot-" : " NotProt-";
                this.state.className += this.state.positionAttributes.highLight ? "High" : "NotHigh";
           }       
      }
@@ -64,6 +64,7 @@ class Position2 extends PureComponent {
                this.setState(localState);               
           }
 
+          event.preventDefault();
           return returnValue;
      }
 

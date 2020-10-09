@@ -1,41 +1,57 @@
 import { getPosition   } from "./InputFieldInfo"
 
-const HandleFunctionKey = (event, position, screenState) => {
-        let request = {};
-        
-        request.sessionId = screenState.sessionId;
-        let functionKey = setPfkey(event);
-        if (functionKey === "") {
-            return "";
-        }
-        
-        const screen = event.target.parentNode.parentNode;
+const HandleFunctionKey = (event, position, screenState, positionRefs) => {
+    let functionKey = getPfkey(event);
+    if (functionKey === "") {
+        return "";
+    }
 
-        for (let row = 0; row < 24; row++){
-            for (let col = 0; col < 80; col++) {
-                for (let fieldInd = 0; fieldInd < screenState.fields.length; fieldInd++) {
-                    let fieldStart = ( screenState.fields[fieldInd].startRow    - 1 ) * 80
-                                     + screenState.fields[fieldInd].startColumn - 1;
-                    let position = getPosition(screen.children[row].children[[col]]);
-                    if (position >= fieldStart 
-                    &&  position <= fieldStart + screenState.fields[fieldInd].length){
-                        screenState.fields[fieldInd].text = 
-                            screenState.fields[fieldInd].text.substring(0, position - fieldStart)
-                        +   screen.children[row].children[[col]].value
-                        +   screenState.fields[fieldInd].text.substring(position - fieldStart + 1);
-                    }
-                }
+    let sendFunctionKey = {
+        row : 0,
+        col : 0,
+        text : ""
+    };
+    let sendKey = {
+        row : 0,
+        col : 0,
+        text : ""
+    };
+
+    let sendKeys = [];    
+
+    for (let row = 0; row < 24; row++) {
+        for (let col = 0; col < 80; col++) {
+            if (positionRefs[row * 80 + col] === document.activeElement) {
+                sendFunctionKey.row = row;
+                sendFunctionKey.col = col;
+                sendFunctionKey.text += functionKey;
             }
-        }
 
-        request.functionKey = functionKey;
-        request.fields = screenState.fields;
-        return JSON.parse(JSON.stringify(request).replaceAll("protected", "isProtected")
-                                      .replaceAll("hidden"   , "isHidden")
-                                      .replaceAll("highLight", "isHighLight"));
+            if (positionRefs[row * 80 + col].current.state.className.search(" Mod") >= 0) {
+                sendKey.row = row;
+                sendKey.col = col;
+                sendKey.text += positionRefs[row * 80 + col].current.state.positionAttributes.text;
+            } else {
+                if (sendKey.text && sendKey.text.trim !== "") {
+                    sendKeys.push(sendKey);
+                    sendKey.text = "";
+                }
+            }   
+        }
+    }
+    if (sendKey.text.trim !== "") {
+        sendKeys.push(sendKey);
+    }
+    sendKeys.push(sendFunctionKey);
+
+    let request = {};
+
+    request.sessionId = screenState.sessionId;
+    request.sendKeys = sendKeys;        
+    return request;
 }
 
-const setPfkey = (event) => {
+const getPfkey = (event) => {
 
     const keyInputs         = ["F1"    , "F2"      , "F3"     , "F4"     , "F5"    , "F6"    , 
                                "F7"    , "F8"      , "F9"     , "F10"    , "F11"   , "F12"   , 

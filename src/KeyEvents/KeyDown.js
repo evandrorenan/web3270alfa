@@ -19,7 +19,7 @@ const KeyDown = (event, screenState, positionRefs) => {
     let position = getPosition(event.target);
 
     if (isFunctionKey(event)) {
-        return handleFunctionKey(event, position, screenState)
+        return handleFunctionKey(event, position, screenState, positionRefs)
     }
 
     if (isSpecialKey(event)) {
