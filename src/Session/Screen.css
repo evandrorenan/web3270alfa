@@ -2,10 +2,15 @@
     width: 1100px;
     padding: 10px;
     margin: 10px;
-    border: 2px solid black;
     background-color: #232423;
     text-align: left;
+    width: 1023px;
     border-collapse: collapse;
+}
+
+.Rows {
+    border: 2px solid #232423;
+    width: 1023px;
 }
 
 .Row {
@@ -13,3 +18,14 @@
     padding: 0px;
     margin: 0px;
 } 
+
+.Trailler {
+    color: rgb(88, 240, 240);
+    font-family: "Lucida Console", "Lucida Sans Typewriter", monaco;
+    font-size: 80%;
+    border-color: rgb(88, 240, 240);
+    border-collapse: collapse;
+    background-color: #232423;
+    width: 1023px;
+    text-align: right;
+}
