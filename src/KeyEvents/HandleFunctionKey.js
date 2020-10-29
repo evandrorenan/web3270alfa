@@ -12,12 +12,12 @@ const HandleFunctionKey = (event, positions) => {
 
     for (let row = 0; row < 24; row++) {
         for (let col = 0; col < 80; col++) {
-            if (positions[row * 80 + col].ref.current.state.className.search(" Modified") >= 0) {
+            if (positions[row * 80 + col].ref.current.className.search(" Modified") >= 0) {
                 if (sendKey.text === "") {
                     sendKey.row = row + 1;
                     sendKey.col = col + 1;
                 }
-                sendKey.text += positions[row * 80 + col].ref.current.positionRef.current.value;
+                sendKey.text += positions[row * 80 + col].ref.current.value;
             } else {
                 if (sendKey.text.trim() !== "") {
                     sendKeys.push(sendKey);

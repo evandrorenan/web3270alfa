@@ -29,7 +29,9 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
+    console.log("L " + action.type);
     const newState = Object.assign({}, state);
+    console.log("M");
 
     switch (action.type) {
 
@@ -39,8 +41,11 @@ const reducer = (state = initialState, action) => {
             break;
         
         case actionTypes.GET_SCREEN:
+            console.log("N");
             newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
+            console.log("O");
             newState.positions = action.positions;
+            console.log("P");
             break;
 
         case actionTypes.SET_STATUS:

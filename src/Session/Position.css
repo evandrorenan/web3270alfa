@@ -7,7 +7,23 @@
     border-collapse: collapse;
     width: 8.8125px;
     caret-color: black;
+    padding: none;
 }
+
+.Field {
+    font-family: "Lucida Console", "Lucida Sans Typewriter", monaco;
+    font-size: 100%;
+    color: black;
+    background-color: black;
+    border: none;
+    border-collapse: collapse;
+    width: 12.7875px;
+    letter-spacing: 3.145px;
+    caret-color: black;
+    padding: none;
+    margin: 0%;
+}
+
 
 .Position:focus {
     background-color: green;

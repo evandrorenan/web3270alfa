@@ -22,14 +22,35 @@ class Position extends PureComponent {
           this.positionRef.current.focus();
      }
 
-     onkeydown = (event) => {          
-          KeyDown(event, this.props.positions);
+     markModified = (event) => {
           if (isTypedChar(event)) {
                this.setState({ 
                     text : event.key,
                     modified : true,
                     sufix: !this.state.sufix
                });
+          }
+     }
+
+     onkeydown = (event) => {       
+          console.log("A");
+          this.markModified(event);
+          console.log("B");
+
+          let requestBody = KeyDown(event, this.props.positions);
+          console.log("C");
+          if (!requestBody) {
+              return false;
+          }
+  
+          if (requestBody === "" || requestBody === undefined) {
+               return true;
+          } else {
+               console.log("D");
+               requestBody.sessionId = this.props.sessionId;
+               console.log("E");
+               this.props.sendKeys(requestBody);
+               console.log("E2");
           }
      }
 
@@ -69,14 +90,16 @@ class Position extends PureComponent {
 const mapStateToProps = state => {
      return {
           positionsRef : state.positionsRef,
-          positions: state.positions
+          positions: state.positions,
+          sessionId: state.sessionId
      };
 }
  
 const mapDispatchToProps = dispatch => {
      return { 
          createRef: (index, ref) => dispatch(actionCreators.createRef(index, ref)),
-         updatePositionText: (index, text) => dispatch(actionCreators.updatePositionText(index, text))
+         updatePositionText: (index, text) => dispatch(actionCreators.updatePositionText(index, text)),
+         sendKeys: (requestBody) => dispatch(actionCreators.sendKeys(requestBody))
      }
  }
 

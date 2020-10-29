@@ -5,6 +5,7 @@ import { connect          } from 'react-redux';
 import * as actionCreators  from "../store/actions";
 
 import './Screen.css';
+import './Position.css';
 
 class Screen2 extends Component {
     
@@ -40,10 +41,21 @@ class Screen2 extends Component {
         }
 
         return <div className="Screen" key="screen">
+
+                    <div className="Rows">
+                        <input  key="Campo1"
+                                id="Campo1"
+                                className="Field NotProt-NotHigh"
+                                type="text" 
+                                maxLength="30"  />
+                    </div>
+
                     <div className="Rows">
                     {rows.map((row) => {return row})}
                     </div>
                     <p className="Trailler">{this.connectionStatus()}</p>
+                    <p className="Trailler">Session id: {this.props.sessionId}</p>
+
                 </div>
     }
 }
