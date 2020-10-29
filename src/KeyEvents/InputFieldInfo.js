@@ -26,7 +26,7 @@ export const currentFieldEnd = (event, position) => {
     return event.target;
 }
 
-export const getPosition = (inputField) => {
+export const getPositionNumber = (inputField) => {
     return inputField.id.replace("Position", "") * 1
 }
 
@@ -40,7 +40,7 @@ export const isProtected = (inputField) => {
 }
 
 export const nextInputField = (event, position) => {
-    let fieldEndPosition = getPosition(currentFieldEnd(event, position));
+    let fieldEndPosition = getPositionNumber(currentFieldEnd(event, position));
 
     // loop from current position until end of the screen
     for (let i = fieldEndPosition + 1; i < 1920; i++) {
@@ -75,7 +75,7 @@ export const nextPosition = (position, desloc) => {
 }
 
 export const previowsInputField = (event, position) => {
-    let fieldStartPosition = getPosition(currentFieldStart(event, position));
+    let fieldStartPosition = getPositionNumber(currentFieldStart(event, position));
 
     // look from current position until the beginning
     for (let i = fieldStartPosition - 1; i >= 0; i--) {

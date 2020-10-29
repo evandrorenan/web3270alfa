@@ -1,6 +1,6 @@
 import { rcPosition   } from "./InputFieldInfo"
 
-const HandleFunctionKey = (event, positionRefs) => {
+const HandleFunctionKey = (event, positions) => {
     
     let sendKey = {
         row : 0,
@@ -12,12 +12,12 @@ const HandleFunctionKey = (event, positionRefs) => {
 
     for (let row = 0; row < 24; row++) {
         for (let col = 0; col < 80; col++) {
-            if (positionRefs[row * 80 + col].current.state.className.search(" Mod") >= 0) {
+            if (positions[row * 80 + col].ref.current.state.className.search(" Modified") >= 0) {
                 if (sendKey.text === "") {
                     sendKey.row = row + 1;
                     sendKey.col = col + 1;
                 }
-                sendKey.text += positionRefs[row * 80 + col].current.positionRef.current.value;
+                sendKey.text += positions[row * 80 + col].ref.current.positionRef.current.value;
             } else {
                 if (sendKey.text.trim() !== "") {
                     sendKeys.push(sendKey);

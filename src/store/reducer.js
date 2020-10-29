@@ -1,26 +1,22 @@
-import { NEW_SESSION , 
-         GET_SCREEN,
-         SET_IS_CONNECTING, 
-         SET_IS_UPDATING_SCREEN, 
-         SET_STATUS,
-         TOGGLE_KEY_NAME_SUFIX } from '../store/actions';
+import * as actionTypes from "../store/actionTypes";
 
 const initialPositions = () => {
-    const strConnecting = "Connecting...";
     let positions = [];
-    for (let i = 0; i < strConnecting.length; i++) {
+    for (let i = 0; i < 1920; i++) {
         positions.push({
             positionId : i,
-            text: strConnecting.charCodeAt[i],
+            text: " ",
             protected : false,
             hidden : false,
-            highLight : false}
+            highLight : false,
+            modified : false,
+            ref : null }
         )
     }
     return positions;
 }
 
-const initialState = {    
+const initialState = {  
     sessionId : null,
     screenId : null,
     positions: initialPositions(),
@@ -33,52 +29,36 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    console.log("antes");
-    console.log("reducer - " + action.type + " - sessionId: " + state.sessionId);
-    console.log("reducer - " + action.type + " - positions.length: " + state.positions.length);
-    console.log("reducer - " + action.type + " - isConnecting: " + state.isConnecting);
-    console.log("reducer - " + action.type + " - isUpdatingScreen: " + state.isUpdatingScreen);
-    console.log("reducer - " + action.type + " - keyNameSufix: " + state.keyNameSufix);
     const newState = Object.assign({}, state);
-
-    newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
 
     switch (action.type) {
 
-        case NEW_SESSION:
+        case actionTypes.NEW_SESSION:
             newState.sessionId = action.sessionId;
             newState.isConnecting = action.isConnecting;
             break;
         
-        case GET_SCREEN:
+        case actionTypes.GET_SCREEN:
+            newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
             newState.positions = action.positions;
-            newState.isUpdatingScreen = action.isUpdatingScreen;
             break;
 
-        case SET_IS_CONNECTING:
-            newState.isConnecting = action.isConnecting;
-            break;
-
-        case SET_IS_UPDATING_SCREEN:
-            newState.isUpdatingScreen = action.isUpdatingScreen;
-            break;
-
-        case SET_STATUS:
+        case actionTypes.SET_STATUS:
             newState.status = action.status;
             break;
 
-        case TOGGLE_KEY_NAME_SUFIX:
+        case actionTypes.CREATE_REF:            
+            newState.positions[action.index].ref = action.ref;
             break;
-    
+
+        case actionTypes.UPDATE_POSITION_TEXT:
+            newState.positions[action.index].modified = true; 
+            newState.positions[action.index].text = action.text; 
+            break;
+
         default:
             break;
     }
-    console.log("depois");
-    console.log("reducer - " + action.type + " - sessionId: " + newState.sessionId);
-    console.log("reducer - " + action.type + " - positions.length: " + newState.positions.length);
-    console.log("reducer - " + action.type + " - isConnecting: " + newState.isConnecting);
-    console.log("reducer - " + action.type + " - isUpdatingScreen: " + newState.isUpdatingScreen);
-    console.log("reducer - " + action.type + " - keyNameSufix: " + newState.keyNameSufix);
     return newState;
 }
 

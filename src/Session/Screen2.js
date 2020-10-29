@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios                from 'axios';
 import { connect          } from 'react-redux';
 
-import Position2            from './Position2';
+import Position             from './Position';
 import KeyDown              from "../KeyEvents/KeyDown";
 
 import * as actionCreators  from "../store/actions";
@@ -39,49 +39,10 @@ class Screen2 extends Component {
         };
     }
 
-    // componentDidMount(){
-    //     axios.get ("http://localhost:8080/getScreen", { crossdomain: true })
-    //          .then ( response => {
-    //              this.refreshScreen(response);
-    //         });
-    // }
-
-    componentDidUpdate2(prevProps, prevState) {
-        console.log("componentDidUpdate - prevProps.isConnecting: " + prevProps.isConnecting);
-        console.log("componentDidUpdate - this.props.isConnecting: " + this.props.isConnecting);
-
-        console.log("componentDidUpdate - prevProps.positions.length: " + prevProps.positions.length);
-        console.log("componentDidUpdate - this.props.positions.length: " + this.props.positions.length);
-
-        if (prevProps.isConnecting && !this.props.isConnecting) {
-            console.log("getScreenRequest");
-            this.props.setIsUpdatingScreen(true);
-            this.props.screenRequest(this.props.sessionId);
-            return true;
-        }         
-    }
-
     componentDidMount() {
         if (!this.props.sessionId) {
             this.props.screenRequest(null);
         }
-    }
-
-    componentDidMount2() {
-        console.log("1ComponentDidMount - isConnecting:" + this.props.isConnecting );
-        if (this.refreshScreen) {
-            console.log("2ComponentDidMount - isConnecting:" + this.props.isConnecting );
-            if (!this.props.sessionId) {
-                console.log("3ComponentDidMount - isConnecting:" + this.props.isConnecting );
-                this.props.setIsConnecting(true);
-                console.log("4ComponentDidMount - isConnecting:" + this.props.isConnecting );
-                this.props.newSessionRequest();
-                console.log("5ComponentDidMount - isConnecting:" + this.props.isConnecting );
-            }            
-            console.log("6ComponentDidMount - isConnecting:" + this.props.isConnecting );
-        }
-        console.log("7ComponentDidMount - isConnecting:" + this.props.isConnecting );
-        this.refreshScreen = !this.refreshScreen;
     }
 
     refreshScreen = (response) => {
@@ -132,11 +93,12 @@ class Screen2 extends Component {
         console.log("refresh: " + this.props.keyNameSufix);
 
         for (let index = 0; index < 1920; index++) {
-            let position = (<Position2 
+            let position = (<Position 
                                 key={(index) + ("_" + ( index + this.props.keyNameSufix)) }
                                 id={"Position" + index}
                                 rowNumber={Math.floor(index / 80)} 
                                 onkeydown={this.onkeydown}
+                                index={index}
                                 position={this.props.positions[index]}
                                 ref={this.positionRef[index]} />);
 
@@ -160,7 +122,7 @@ class Screen2 extends Component {
     }
 }
 
-//TODO: get rid of state on this class, replacing it by this.props
+//TODO: get rid of state on this.state replacing it by this.props
 const mapStateToProps = state => {
     console.log("mapStateToProps - state.isConnecting: " + state.isConnecting);
     console.log("mapStateToProps - state.positions.length: " + state.positions.length);

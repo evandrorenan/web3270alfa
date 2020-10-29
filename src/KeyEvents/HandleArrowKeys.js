@@ -2,7 +2,7 @@ import { focusOn        } from "./InputFieldAction";
 import { nextPosition   } from "./InputFieldInfo";
 import { inputField     } from "./InputFieldInfo";
 
-const HandleArrowKeys = (event, position, positionRefs) => {
+const HandleArrowKeys = (event, position, positions) => {
 
     let nextFocus;
     switch (event.key) {
@@ -27,7 +27,7 @@ const HandleArrowKeys = (event, position, positionRefs) => {
             break;
     }
 
-    positionRefs[nextFocus].current.focusPositionRef();
+    positions[nextFocus].ref.current.focus();
     return;
 }
 

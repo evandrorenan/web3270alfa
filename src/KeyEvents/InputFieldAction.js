@@ -1,7 +1,7 @@
 import { isProtected }      from "./InputFieldInfo";
 import { inputField }       from "./InputFieldInfo";
 import { rcPosition }       from "./InputFieldInfo";
-import { getPosition }      from "./InputFieldInfo";
+import { getPositionNumber }      from "./InputFieldInfo";
 import { currentFieldEnd }  from "./InputFieldInfo";
 
 export const deleteFieldValue = (event, position) => {
@@ -10,7 +10,7 @@ export const deleteFieldValue = (event, position) => {
         return false;
     } 
 
-    let lastFieldPos = getPosition(currentFieldEnd(event, position));
+    let lastFieldPos = getPositionNumber(currentFieldEnd(event, position));
 
     for (let i = position; i < lastFieldPos; i++) {
         inputField(event, i).value = inputField(event, i + 1).value;

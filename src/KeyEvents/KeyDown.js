@@ -6,9 +6,9 @@ import { isFunctionKey }    from "./KeyTipe";
 import { isSpecialKey }     from "./KeyTipe";
 import { isArrowKey }       from "./KeyTipe";
 import { isTypedChar }      from "./KeyTipe";
-import { getPosition }      from "./InputFieldInfo";
+import { getPositionNumber }      from "./InputFieldInfo";
 
-const KeyDown = (event, screenState, positionRefs) => {
+const KeyDown = (event, positions) => {
     if (event.target.id.search("Position") < 0 ){
         if (isSpecialKey(event)) {
             return false;
@@ -16,23 +16,22 @@ const KeyDown = (event, screenState, positionRefs) => {
         return;
     }
 
-    let position = getPosition(event.target);
+    let position = getPositionNumber(event.target);
 
     if (isFunctionKey(event)) {
-        return handleFunctionKey(event, positionRefs)
+        return handleFunctionKey(event, positions)
     }
 
     if (isSpecialKey(event)) {
-        handleSpecialKeys(event, position, positionRefs);
+        handleSpecialKeys(event, position);
         return false;
     }
 
     if (isArrowKey(event)) {
-        return handleArrowKeys(event, position, positionRefs);
+        return handleArrowKeys(event, position, positions);
     }
 
     if (isTypedChar(event)) {
-        screenState.positions[position].modified = true;
         return handleType(event, position);
     }
 

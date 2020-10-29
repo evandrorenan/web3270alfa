@@ -1,50 +1,83 @@
-import React from 'react';
+import React, {PureComponent} from 'react';
+import { isTypedChar }        from "../KeyEvents/KeyTipe";
+import { connect }            from 'react-redux';
+import * as actionCreators    from "../store/actions";
+import KeyDown                from "../KeyEvents/KeyDown";
 
 import './Position.css'
 
-const onchange = (event) => {
-     console.log("handleFocus");
-}
+class Position extends PureComponent {
 
-const handleFocus = (event) => {
-     console.log("handleFocus");
-}
-
-const Position = (props) => {
-     let pos = ((props.rowNumber * 80)+ props.colNumber);
-     let keyName = "position" + pos;
-     let fieldIndex = 0;
-
-     for (let i = 0; i < props.fieldList.length; i++) {
-          let fieldPos = (((props.fieldList[i].startRow - 1) * 80) + (props.fieldList[i].startColumn - 1));
-          if (pos >= fieldPos && pos < fieldPos + props.fieldList[i].length ) {
-               fieldIndex = i;
-               console.log("fieldIndex: " + fieldIndex + " - " + props.fieldList[i].text);
+     constructor(props){
+          super();
+          this.state = { 
+               text : (props.positions[props.index]).text,
+               modified : false,
+               sufix : false
           }
-     } 
-
-     let className = "Position ";
-
-     if (props.fieldList[fieldIndex].hidden) {
-          className += " Hidden";
-     } else {
-          className += props.fieldList[fieldIndex].protected ? " Prot-" : " NotProt-";
-          className += props.fieldList[fieldIndex].highLight ? "High" : "NotHigh";
+          props.createRef(props.index, React.createRef());
      }
 
-     console.log("keyName:" + keyName);
+     focusPositionRef() {
+          this.positionRef.current.focus();
+     }
 
-     return <input 
-          key={keyName}
-          type="text" 
-          className={className}
-          onChange={onchange}
-          maxLength="1" 
-          onKeyUp={props.onkeyup}
-          onKeyDown={props.onkeydown}
-          onFocus={handleFocus}
-          id={keyName}
-          value={props.content} />;     
+     onkeydown = (event) => {          
+          KeyDown(event, this.props.positions);
+          if (isTypedChar(event)) {
+               this.setState({ 
+                    text : event.key,
+                    modified : true,
+                    sufix: !this.state.sufix
+               });
+          }
+     }
+
+     getClassName = (position) => {
+          let className = "Position";
+
+          className += position.protected ? " Prot-" : " NotProt-";
+
+          if (position.hidden) {
+               className += "Hidden";
+          } else {
+               className += position.highLight ? "High" : "NotHigh";
+          }
+
+          if (this.state.modified) {
+               className += " Modified";
+          }
+
+          return className;     
+     }
+
+     render() {      
+          return ( 
+               <input 
+                    key={"Position" + this.props.id + this.state.sufix}
+                    id={"Position" + this.props.index}
+                    ref={this.props.positions[this.props.index].ref}
+                    className={this.getClassName(this.props.positions[this.props.index])}
+                    onKeyDown={this.onkeydown}
+                    value={this.state.text}
+                    type="text" 
+                    maxLength="1"  />
+          )    
+     }
 }
 
-export default Position;
+const mapStateToProps = state => {
+     return {
+          positionsRef : state.positionsRef,
+          positions: state.positions
+     };
+}
+ 
+const mapDispatchToProps = dispatch => {
+     return { 
+         createRef: (index, ref) => dispatch(actionCreators.createRef(index, ref)),
+         updatePositionText: (index, text) => dispatch(actionCreators.updatePositionText(index, text))
+     }
+ }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Position);
