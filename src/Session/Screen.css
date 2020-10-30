@@ -8,6 +8,13 @@
     border-collapse: collapse;
 }
 
+@media only screen
+and ( max-width : 600px ) {
+    .Screen {
+        background-color: purple;
+    }
+}    
+
 .Rows {
     border: 2px solid #232423;
     width: 1023px;
