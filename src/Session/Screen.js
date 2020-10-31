@@ -1,6 +1,5 @@
-
 import React, { Component } from 'react';
-import Position             from './Position';
+import Field                from './Field';
 import { connect          } from 'react-redux';
 import * as actionCreators  from "../store/actions";
 
@@ -20,42 +19,32 @@ class Screen2 extends Component {
     }
 
     render() {
-        let positions = [];
-        let rows = [];
+        let fields = [this.props.fields.length];
+        let rows = [24];
 
-        for (let index = 0; index < 1920; index++) {
-            let position = (<Position 
-                                key={(index) + ("_" + ( index + this.props.keyNameSufix)) }
-                                id={"Position" + index}
-                                index={index} />);
-
-            positions.push(position);
-        }
-
-        for (let index = 0; index < 24; index++) {
-            rows.push( 
-                <p className="Row" key={"row" + index} id={"row" + index}>
-                    { positions.slice (
-                        ( index * 80 ), (index + 1) * 80 )}
-                </p>)
+        for (let row = 0; row < 24; row++) {
+            rows[row] = [];
+            for (let index = 0; index < this.props.fields.length; index++) {
+                if (this.props.fields[index].row === row + 1) {
+                    rows[row].push(this.props.fields[index])
+                }
+            }
         }
 
         return <div className="Screen" key="screen">
-
                     <div className="Rows">
-                        <input  key="Campo1"
-                                id="Campo1"
-                                className="Field NotProt-NotHigh"
-                                type="text" 
-                                maxLength="30"  />
-                    </div>
-
-                    <div className="Rows">
-                    {rows.map((row) => {return row})}
+                        {rows.map((row, index) => {
+                            return <p className="Row" key={"row" + index} id={"row" + index}>
+                                        {rows[index].map((field, fieldIndex) => {
+                                            return <Field key={field.fieldId + "_" + this.props.keyNameSufix }
+                                                          id={"Field" + field.fieldId}
+                                                          field={field} /> }
+                                        )}
+                                   </p>}
+                        )}
                     </div>
                     <p className="Trailler">{this.connectionStatus()}</p>
                     <p className="Trailler">Session id: {this.props.sessionId}</p>
-
                 </div>
     }
 }
@@ -63,7 +52,7 @@ class Screen2 extends Component {
 const mapStateToProps = state => {
     return {
         sessionId: state.sessionId,
-        positions: state.positions,
+        fields: state.fields,
         keyNameSufix: state.keyNameSufix,
         isConnecting : state.isConnecting,
         isUpdatingScreen : state.isUpdatingScreen,

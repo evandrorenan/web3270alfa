@@ -16,10 +16,30 @@ const initialPositions = () => {
     return positions;
 }
 
+const initialFields = () => {
+    let fields = [];
+    for (let i = 0; i < 24; i++) {
+        fields.push({
+            start : (i * 80) + 1,
+            end: (i * 80) + 80,
+            row: i + 1,
+            col: i * 80 + 1,
+            length : 80,
+            text : " ",
+            hidden : false,
+            highLight : false,
+            modified : false,
+            ref : null 
+        });
+    }
+    return fields;
+}
+
 const initialState = {  
     sessionId : null,
     screenId : null,
-    positions: initialPositions(),
+    fields: initialFields(),
+    positions: [],
     fieldPos: [ 1 ],
     cursorPos : 1,
     keyNameSufix : 1,
@@ -29,42 +49,49 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    console.log("L " + action.type);
-    const newState = Object.assign({}, state);
-    console.log("M");
-
+    let newState;
     switch (action.type) {
 
         case actionTypes.NEW_SESSION:
-            newState.sessionId = action.sessionId;
-            newState.isConnecting = action.isConnecting;
-            break;
+            state.sessionId = action.sessionId;
+            state.isConnecting = action.isConnecting;
+            return state;
         
         case actionTypes.GET_SCREEN:
-            console.log("N");
+            newState = Object.assign({}, state);
             newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
-            console.log("O");
             newState.positions = action.positions;
-            console.log("P");
-            break;
+            newState.fields = action.fields;
+            return newState;
 
+        case actionTypes.GET_SCREEN_FIELDS:
+            newState = Object.assign({}, state);
+            newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
+            newState.fields = action.fields;
+            return newState;
+    
         case actionTypes.SET_STATUS:
-            newState.status = action.status;
-            break;
+            state.status = action.status;
+            return state;
 
         case actionTypes.CREATE_REF:            
-            newState.positions[action.index].ref = action.ref;
-            break;
+            state.fields[action.index].ref = action.ref;
+            return state;
 
         case actionTypes.UPDATE_POSITION_TEXT:
-            newState.positions[action.index].modified = true; 
-            newState.positions[action.index].text = action.text; 
+            state.fields[action.index].modified = true; 
+            state.fields[action.index].text = action.text; 
             break;
+
+        case actionTypes.SET_FIELD_TEXT:
+            console.log("i: " + action.index + action.text );
+            state.fields[action.index].text = action.text;
+            return state;
 
         default:
             break;
     }
-    return newState;
+    return state;
 }
 
 export default reducer;

@@ -33,12 +33,9 @@ class Position extends PureComponent {
      }
 
      onkeydown = (event) => {       
-          console.log("A");
-          this.markModified(event);
-          console.log("B");
+          // this.markModified(event);
 
           let requestBody = KeyDown(event, this.props.positions);
-          console.log("C");
           if (!requestBody) {
               return false;
           }
@@ -46,11 +43,8 @@ class Position extends PureComponent {
           if (requestBody === "" || requestBody === undefined) {
                return true;
           } else {
-               console.log("D");
                requestBody.sessionId = this.props.sessionId;
-               console.log("E");
                this.props.sendKeys(requestBody);
-               console.log("E2");
           }
      }
 

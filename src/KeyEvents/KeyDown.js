@@ -10,9 +10,9 @@ import { getPositionNumber }      from "./InputFieldInfo";
 
 const KeyDown = (event, positions) => {
     if (event.target.id.search("Position") < 0 ){
-        if (isSpecialKey(event)) {
-            return false;
-        }
+        // if (isSpecialKey(event)) {
+        //     return false;
+        // }
         return;
     }
 
@@ -22,20 +22,20 @@ const KeyDown = (event, positions) => {
         return handleFunctionKey(event, positions)
     }
 
-    if (isSpecialKey(event)) {
-        handleSpecialKeys(event, position);
-        return false;
-    }
+    // if (isSpecialKey(event)) {
+    //     handleSpecialKeys(event, position);
+    //     return false;
+    // }
 
-    if (isArrowKey(event)) {
-        return handleArrowKeys(event, position, positions);
-    }
+    // if (isArrowKey(event)) {
+    //     return handleArrowKeys(event, position, positions);
+    // }
 
-    if (isTypedChar(event)) {
-        return handleType(event, position);
-    }
+    // if (isTypedChar(event)) {
+    //     return handleType(event, position);
+    // }
 
-    return false;
+    return true;
 }
 
 export default KeyDown;

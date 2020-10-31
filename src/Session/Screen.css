@@ -4,7 +4,6 @@
     margin: 10px;
     background-color: #232423;
     text-align: left;
-    width: 1023px;
     border-collapse: collapse;
 }
 
@@ -16,8 +15,8 @@ and ( max-width : 600px ) {
 }    
 
 .Rows {
-    border: 2px solid #232423;
-    width: 1023px;
+    border: none;
+    border-collapse: collapse;
 }
 
 .Row {

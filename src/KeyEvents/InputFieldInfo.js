@@ -30,6 +30,10 @@ export const getPositionNumber = (inputField) => {
     return inputField.id.replace("Position", "") * 1
 }
 
+export const getFieldId = (inputField) => {
+    return inputField.id.replace("Field", "").replace("Position", "");
+}
+
 export const inputField = (event, position) => {
     const rc = rcPosition(position);
     return event.target.parentNode.parentNode.children[rc.row].children[rc.col];

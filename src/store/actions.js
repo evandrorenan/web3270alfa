@@ -39,7 +39,7 @@ export const newSessionAsync = () => {
     }
     return dispatch => {
         dispatch(setStatus(STATUS_CONNECTING));
-        axios.post ("http://localhost:8080/newSession", body, { crossdomain: true })
+        axios.post ("http://localhost:8080/newsession", body, { crossdomain: true })
             .then ( response => { 
                 dispatch(newSessionResponseHandler(response));
             });
@@ -50,7 +50,7 @@ const newSessionResponseHandler = (response) => {
     const x =  dispatch => {
         dispatch(newSessionAction(response.data.sessionId));
         dispatch(setStatus(STATUS_RETRIEVING_SCREEN));
-        dispatch(getScreenAsync(response.data.sessionId));
+        dispatch(getScreenFieldsAsync(response.data.sessionId));
         return newSessionAction(response.data.sessionId);
     }
     return x;
@@ -71,7 +71,22 @@ export const getScreenAsync = (sessionId) => {
         }
     }
     return dispatch => {
-        axios.get ("http://localhost:8080/session/" + sessionId + "/Screen", { crossdomain: true })
+        axios.get ("http://localhost:8080/session/" + sessionId + "/screen", { crossdomain: true })
+            .then ( response => { 
+                dispatch(setStatus(STATUS_READY));
+                dispatch(getScreenResponseHandler(response));
+            } )
+    };
+};
+
+export const getScreenFieldsAsync = (sessionId) => {
+    if (!sessionId) {
+        return dispatch => {
+            dispatch(newSessionAsync());
+        }
+    }
+    return dispatch => {
+        axios.get ("http://localhost:8080/session/" + sessionId + "/screenfields", { crossdomain: true })
             .then ( response => { 
                 dispatch(setStatus(STATUS_READY));
                 dispatch(getScreenResponseHandler(response));
@@ -80,30 +95,33 @@ export const getScreenAsync = (sessionId) => {
 };
 
 const getScreenResponseHandler = (response) => {
-    console.log("K");
     return getScreenAction(response.data);
 }
 
 export const getScreenAction = (responseData) => {
     return {
         type: actionTypes.GET_SCREEN,
-        positions: responseData.positions
+        positions: responseData.positions,
+        fields: responseData.fields
     };
 };
 
 export const sendKeys = (requestBody) => {
-    console.log("F");
 
     return dispatch => {
-        console.log("G");
         dispatch(setStatus(STATUS_SENDING_INPUT_DATA));
-        console.log("H");
         axios.post ("http://localhost:8080/session/sendkeys", requestBody, { crossdomain: true })
         .then ( response => { 
-                console.log("I");
                 dispatch(setStatus(STATUS_READY));
-                console.log("J");
                 dispatch(getScreenResponseHandler(response));
             });
     };
 };
+
+export const setFieldText = (index, text) => {
+    return { 
+        type: actionTypes.SET_FIELD_TEXT,
+        index: index,
+        text: text 
+    }
+}
