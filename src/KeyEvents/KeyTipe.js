@@ -39,6 +39,6 @@ export const isTypedChar = (event) => {
     + "·©§¶¼½¾[]¯¨´×{ABCDEFGHI­ôöòóõ}JKLMNOPQR"
     + "¹ûüùúÿ\\÷STUVWXYZ²ÔÖÒÓÕ0123456789³ÛÜÙÚ";
        
-    return (  validChars.search(event.key) >= 0
+    return (  validChars.indexOf(event.key) >= 0
            && !isProtected(event.target)       );
 }

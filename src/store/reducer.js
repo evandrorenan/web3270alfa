@@ -20,6 +20,7 @@ const initialFields = () => {
     let fields = [];
     for (let i = 0; i < 24; i++) {
         fields.push({
+            fieldId : i,
             start : (i * 80) + 1,
             end: (i * 80) + 80,
             row: i + 1,
@@ -62,6 +63,8 @@ const reducer = (state = initialState, action) => {
             newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
             newState.positions = action.positions;
             newState.fields = action.fields;
+            newState.cursorPos = action.cursorPos;
+            newState.sessionId = action.sessionId;
             return newState;
 
         case actionTypes.GET_SCREEN_FIELDS:
@@ -84,8 +87,11 @@ const reducer = (state = initialState, action) => {
             break;
 
         case actionTypes.SET_FIELD_TEXT:
-            console.log("i: " + action.index + action.text );
             state.fields[action.index].text = action.text;
+            return state;
+
+        case actionTypes.MARK_MODIFIED_FIELD:
+            state.fields[action.index].modified = true;
             return state;
 
         default:

@@ -6,3 +6,4 @@ export const CREATE_REF = "CREATE_REF";
 export const SEND_KEYS = "SEND_KEYS";
 export const SET_FIELD_TEXT = "SET_FIELD_TEXT";
 export const UPDATE_POSITION_TEXT = "UPDATE_POSITION_TEXT";
+export const MARK_MODIFIED_FIELD = "MARK_MODIFIED_FIELD";

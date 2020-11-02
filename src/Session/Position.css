@@ -1,6 +1,7 @@
 .Position {
     font-family: "Lucida Console", "Lucida Sans Typewriter", monaco;
-    font-size: 132%;
+    font-size: 100%;
+    letter-spacing: 2.145px;
     color: black;
     background-color: black;
     border: none;
@@ -26,8 +27,61 @@
     margin: 0%;
 }
 
+.Blue {
+    color: blue;
+}
+.Green {
+    color: green;
+}
+.Cyan {
+    color: cyan;
+}
+.Red {
+    color: red;
+}
+.Magenta {
+    color: magenta;
+}
+.Brown {
+    color: brown;
+}
+.White {
+    color: white;
+}
+.Gray {
+    color: gray;
+}
+.Light-blue {
+    color: lightblue;
+}
+.Light-green {
+    color: lightgreen;
+}
+.Light-cyan {
+    color: lightcyan;
+}
+.Light-red {
+    color: lightcoral;
+}
+.Light-magenta {
+    color: lightpink;
+}
+.Yellow {
+    color: yellow;
+}
+.White-HI {
+    color: white;
+}
+.Blank { 
+    color: grey;
+}
+
 .Position:focus {
     caret-color: green;
+}
+
+.Hidden {
+    color: grey;
 }
 
 .NotProt-Hidden {

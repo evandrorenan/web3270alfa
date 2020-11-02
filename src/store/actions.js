@@ -102,26 +102,91 @@ export const getScreenAction = (responseData) => {
     return {
         type: actionTypes.GET_SCREEN,
         positions: responseData.positions,
-        fields: responseData.fields
+        fields: responseData.fields,
+        cursorPos: responseData.cursorPos,
+        sessionId : responseData.sessionId
     };
 };
 
-export const sendKeys = (requestBody) => {
+const buildRequestBody = (row, col, currentFieldText, userFunctionKey, fields, sessionId) => {
+    let requestBody = {};
+    requestBody.sessionId = sessionId;
+    requestBody.sendKeys = [];
+    let currentFieldLen = 0;
+    for (let i = 0; i < fields.length; i++) {
+        if (fields[i].modified ) {
+            if (fields[i].row === row && fields[i].col === col ) {
+                currentFieldLen = fields[i].length;
+            } else {
+                requestBody.sendKeys.push({
+                    row : fields[i].row,
+                    col : fields[i].col,
+                    text : ((fields[i].text + Array(fields[i].length).join(' ')).substr(0, fields[i].length)),
+                    functionKey : ""
+                })
+            }
+        }
+    }
+    
+    requestBody.sendKeys.push({
+        row : row,
+        col : col,
+        text : ((currentFieldText + Array(currentFieldLen).join(' ')).substr(0, currentFieldLen)),
+        functionKey : userFunctionKey }); 
+    return requestBody;
+}
+
+const buildRequestBodyOld = (row, col, currentFieldText, functionKey, fields, sessionId) => {
+    let requestBody = {};
+    let localText = "";
+    requestBody.sessionId = sessionId;
+    requestBody.sendKeys = [];
+    for (let i = 0; i < fields.length; i++) {
+        if (!fields[i].protected) {
+            localText = fields[i].text;
+            if (fields[i].row === row 
+            &&  fields[i].col === col ) {
+                localText = currentFieldText + functionKey;
+            } 
+            requestBody.sendKeys.push({
+                row : fields[i].row,
+                col : fields[i].col,
+                text : localText }
+            )
+        }
+    }
+    return requestBody;
+}
+
+export const sendKeys = (row, col, currentFieldText, functionKey, fields, sessionId) => {
+
+    const requestBody = buildRequestBody(row, col, currentFieldText, functionKey, fields, sessionId);
+    console.log("requestBody:" + requestBody.sessionId + " " + requestBody.sendKeys[0].text);
 
     return dispatch => {
+        console.log("A");
         dispatch(setStatus(STATUS_SENDING_INPUT_DATA));
+        console.log("b");
         axios.post ("http://localhost:8080/session/sendkeys", requestBody, { crossdomain: true })
         .then ( response => { 
+                console.log("c");
                 dispatch(setStatus(STATUS_READY));
                 dispatch(getScreenResponseHandler(response));
             });
     };
 };
 
-export const setFieldText = (index, text) => {
+export const setFieldText = (localIndex, localText) => {
     return { 
         type: actionTypes.SET_FIELD_TEXT,
-        index: index,
-        text: text 
+        index: localIndex,
+        text: localText 
+    }
+}
+
+export const markModifiedField = (localIndex) => {
+    return {
+        type : actionTypes.MARK_MODIFIED_FIELD,
+        index : localIndex
     }
 }
