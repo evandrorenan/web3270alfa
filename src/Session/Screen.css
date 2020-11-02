@@ -1,9 +1,10 @@
 .Screen {
     width: 1100px;
     padding: 10px;
+    background-color: black;
     margin: 10px;
-    background-color: #232423;
     text-align: left;
+    align-items: center;
     border-collapse: collapse;
 }
 

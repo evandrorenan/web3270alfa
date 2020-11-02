@@ -28,10 +28,10 @@
 }
 
 .Blue {
-    color: blue;
+    color: rgb(120, 144, 240);
 }
 .Green {
-    color: green;
+    color: rgb(36, 216, 48);
 }
 .Cyan {
     color: cyan;
@@ -73,7 +73,7 @@
     color: white;
 }
 .Blank { 
-    color: grey;
+    color: rgb(36, 216, 48);
 }
 
 .Position:focus {
@@ -81,7 +81,7 @@
 }
 
 .Hidden {
-    color: grey;
+    color: rgb(60, 60, 60);
 }
 
 .NotProt-Hidden {

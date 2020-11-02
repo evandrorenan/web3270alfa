@@ -83,6 +83,7 @@ class Field extends Component {
                return false;
           } 
           if (isTypedChar(event)) {
+               this.markModified();
                event.target.selectionEnd = event.target.selectionStart + 1;
           }
      }
@@ -102,9 +103,9 @@ class Field extends Component {
      }
 
      onblur = (event) => {
-          // this.props.setFieldText(
-          //      this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
-          //      event.target.value);          
+          this.props.setFieldText(
+               this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
+               event.target.value);
      }
 
      render() {      

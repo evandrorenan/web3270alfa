@@ -121,7 +121,8 @@ const buildRequestBody = (row, col, currentFieldText, userFunctionKey, fields, s
                 requestBody.sendKeys.push({
                     row : fields[i].row,
                     col : fields[i].col,
-                    text : ((fields[i].text + Array(fields[i].length).join(' ')).substr(0, fields[i].length)),
+                    text : fields[i].text,
+                    // text : ((fields[i].text + Array(fields[i].length).join(' ')).substr(0, fields[i].length)),
                     functionKey : ""
                 })
             }
@@ -131,7 +132,8 @@ const buildRequestBody = (row, col, currentFieldText, userFunctionKey, fields, s
     requestBody.sendKeys.push({
         row : row,
         col : col,
-        text : ((currentFieldText + Array(currentFieldLen).join(' ')).substr(0, currentFieldLen)),
+        text : currentFieldText,
+        // text : ((currentFieldText + Array(currentFieldLen).join(' ')).substr(0, currentFieldLen)),
         functionKey : userFunctionKey }); 
     return requestBody;
 }
