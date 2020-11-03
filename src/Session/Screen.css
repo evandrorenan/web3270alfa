@@ -1,38 +1,101 @@
-.Screen {
-    width: 1100px;
-    padding: 10px;
-    background-color: black;
-    margin: 10px;
+.Title {
+    width: 95%;
+    height: 60px;
+    background-image: linear-gradient(to right, grey , lightgray);
     text-align: left;
-    align-items: center;
-    border-collapse: collapse;
+    padding: 0px 10px 20px 20px;
+    margin: 0px;
+    font-size: 60%;
+    font-weight: bold;
+    font-family: "Courier New", "Lucida Console", monaco;
 }
 
-@media only screen
-and ( max-width : 600px ) {
-    .Screen {
-        background-color: purple;
-    }
-}    
+.Body {
+    padding: 10px;
+    margin: 10px;
+    border-color: lightgray;
+    border-width: 3px;
+
+    width: 953px;
+    border-style: solid;
+    border-radius: 15px;
+}
+
+.Session {
+    border-radius: 15px;
+    width: 953px;
+}
+
+.Screen {
+    border-radius: 15px;
+    width: 943px;
+    /* padding: 0px 0px 0px 0px; */
+    background-color: black;
+    /* margin: 10px; */
+    /* border-color: #232423;; */
+    border-style: solid;
+    text-align: left;
+    align-items: center;
+    /* border-collapse: collapse; */
+}
 
 .Rows {
-    border: none;
-    border-collapse: collapse;
+    border-radius: 15px;
 }
 
 .Row {
     line-height: 0.00001;
     padding: 0px;
     margin: 0px;
+    border-radius: 15px;
 } 
 
-.Trailler {
-    color: rgb(88, 240, 240);
-    font-family: "Lucida Console", "Lucida Sans Typewriter", monaco;
+.TraillerTitle {
+    background-image: linear-gradient(to right, grey , lightgray);
+    text-align: left;
+    width: 931px;
+    height: 25px;
+    border-style: none;
+    text-align: left;
+    padding: 10px;
+    margin: 0px;
+    align-items: center;
+    /* border-collapse: collapse; */
+    color: white;
+    font-family: "Helvetica", "Lucida Sans Typewriter", monaco;
+}
+
+.TraillerDiv {
+    padding: 0px;
+    border-radius: 6px;
+    border-color: lightgray;
+    border-width: 2px;
+    border-style: solid;
+    width: 949px;
+    margin: 10px 0px 0px 0px;
     font-size: 80%;
+}
+
+.Trailler {
+    margin: 0px 0px 0px 0px;
+    width: 800px;
+    padding: 10px;
+    background-color: white;
+    /* margin: 10px; */
+    border-style: none;
+    text-align: left;
+    align-items: center;
+    /* border-collapse: collapse; */
+    color: black;
+    font-family: "Helvetica", "Lucida Sans Typewriter", monaco;
+
+/* 
+    font-size: 80%;
+    padding: 10px;
+    margin: 10px;
     border-color: rgb(88, 240, 240);
     border-collapse: collapse;
-    background-color: #232423;
-    width: 1023px;
-    text-align: right;
+    /* background-color: #232423; */
+    /* width: 1023px; */
+    /* text-align: left;  */
 }

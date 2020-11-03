@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import { isFunctionKey, isTypedChar }        from "../KeyEvents/KeyTipe";
 import { connect }            from 'react-redux';
 import * as actionCreators    from "../store/actions";
-import KeyDown                from "../KeyEvents/KeyDown";
 import { getPfkey }           from '../KeyEvents/HandleFunctionKey';
 
 import './Position.css'
-import { getFieldId, getPositionNumber } from '../KeyEvents/InputFieldInfo';
+import { getFieldId } from '../KeyEvents/InputFieldInfo';
 
 class Field extends Component {
 
@@ -21,31 +20,8 @@ class Field extends Component {
                ref);
      }
 
-     shouldComponentUpdate(nextProps, nextState) {
-          return true;
-     }
-
      rcPosition() {
           return (this.state.currentField.row - 1) * 80 + this.state.currentField.col;
-     }
-
-     componentDidMount() {
-          if (this.props.cursorPos === this.rcPosition()){
-               if (this.state.currentField.ref.current) {
-                    this.state.currentField.ref.current.focus();
-               }
-          }
-     }
-
-     onfocus = (event) => {
-          event.target.selectionStart = 0;
-          event.target.selectionEnd = 0;
-     }
-
-     onchange = (event) => {
-          if (isTypedChar(event)) {
-               this.markModified();
-          }
      }
 
      markModified = () => {
@@ -59,10 +35,64 @@ class Field extends Component {
           }
      }
 
-     onkeyup = (event) => {
+     getClassName = (field) => {
+          let className = "Position";
+
+          // className += field.protected ? " Prot-" : " NotProt-";
+
+          if (field.hidden) {
+               className += " Hidden";
+          } else {
+               className += " " + field.color;
+          }
+
+          return className;     
+     }
+
+     shouldComponentUpdate(nextProps, nextState) {
+          return true;
+     }
+
+     componentDidMount() {
+          let index = this.props.fields.findIndex(field => field.fieldId === this.state.currentField.fieldId);
+          if (this.props.cursorPos === this.rcPosition()){
+               if (this.state.currentField.ref.current) {
+                    this.state.currentField.ref.current.focus();
+                    this.props.setFocusedField (
+                         index,
+                         this.state.currentField );          
+                    return;
+               }
+
+          }
+          
+          if ( !this.props.focusedField && index === 1919) {
+               this.state.currentField.ref.current.focus();
+               this.props.setFocusedField (
+                    index,
+                    this.state.currentField );          
+          }
+     }
+
+     onfocus = (event) => {
+          event.target.selectionStart = 0;
+          event.target.selectionEnd = 0;
+          this.props.setFocusedField(
+               this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
+               this.state.currentField);
+     }
+
+     onblur = (event) => {
+          this.props.setFieldText(
+               this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
+               event.target.value);
+          this.props.setFocusedField(null, null);
+     }
+
+     onchange = (event) => {
           if (isTypedChar(event)) {
-               // event.target.selectionEnd++;
-          }     
+               this.markModified();
+          }
      }
 
      onkeydown = (event) => {
@@ -83,29 +113,19 @@ class Field extends Component {
                return false;
           } 
           if (isTypedChar(event)) {
+               if (this.state.currentField.protected) {
+                    event.preventDefault();
+                    return;
+               }
                this.markModified();
                event.target.selectionEnd = event.target.selectionStart + 1;
           }
      }
 
-     getClassName = (field) => {
-          let className = "Position";
-
-          // className += field.protected ? " Prot-" : " NotProt-";
-
-          if (field.hidden) {
-               className += " Hidden";
-          } else {
-               className += " " + field.color;
-          }
-
-          return className;     
-     }
-
-     onblur = (event) => {
-          this.props.setFieldText(
-               this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
-               event.target.value);
+     onkeyup = (event) => {
+          if (isTypedChar(event)) {
+               // event.target.selectionEnd++;
+          }     
      }
 
      render() {      
@@ -120,10 +140,10 @@ class Field extends Component {
                     onBlur={this.onblur}
                     onFocus={this.onfocus}
                     onChange={this.onchange}
-                    disabled={this.state.currentField.protected}
+                    // disabled={this.state.currentField.protected}
                     onKeyUp={this.onkeyup}
                     onKeyDown={this.onkeydown}
-                    style={{width: 12.7875 * (this.state.currentField.length)}}
+                    style={{width: 11.7875 * (this.state.currentField.length)}}
                     maxLength={(this.state.currentField.length)}
                />
           )    
@@ -134,16 +154,19 @@ const mapStateToProps = state => {
      return {
           fields: state.fields,
           sessionId: state.sessionId,
-          cursorPos: state.cursorPos
+          cursorPos: state.cursorPos,
+          focusedField: state.focusedField
      };
 }
  
 const mapDispatchToProps = dispatch => {
      return { 
          createRef: (index, ref) => dispatch(actionCreators.createRef(index, ref)),
-         sendKeys: (row, col, text, functionKey, fields, sessionId) => dispatch(actionCreators.sendKeys(row, col, text, functionKey, fields, sessionId)),
+         sendKeys: (row, col, text, functionKey, fields, sessionId) => 
+                    dispatch(actionCreators.sendKeys(row, col, text, functionKey, fields, sessionId)),
          setFieldText: (index, text) => dispatch(actionCreators.setFieldText(index, text)),
-         markModifiedField: (index) => dispatch(actionCreators.markModifiedField(index))
+         markModifiedField: (index) => dispatch(actionCreators.markModifiedField(index)),
+         setFocusedField: (index, currentField) => dispatch(actionCreators.setFocusedField(index, currentField))
      }
  }
 

@@ -43,6 +43,7 @@ const initialState = {
     positions: [],
     fieldPos: [ 1 ],
     cursorPos : 1,
+    focusedField : null,
     keyNameSufix : 1,
     isConnecting : false,
     isUpdatingScreen : false,
@@ -94,6 +95,12 @@ const reducer = (state = initialState, action) => {
             state.fields[action.index].modified = true;
             return state;
 
+        case actionTypes.SET_FOCUSED_FIELD:
+            console.log("Set focused field-index: " + action.index);
+            console.log("Set focused field-row: " + action.focusedField.row);
+            state.fields[action.index].focusedField = action.focusedField;
+            return state;    
+                
         default:
             break;
     }

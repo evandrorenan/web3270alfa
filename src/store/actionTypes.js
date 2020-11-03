@@ -7,3 +7,5 @@ export const SEND_KEYS = "SEND_KEYS";
 export const SET_FIELD_TEXT = "SET_FIELD_TEXT";
 export const UPDATE_POSITION_TEXT = "UPDATE_POSITION_TEXT";
 export const MARK_MODIFIED_FIELD = "MARK_MODIFIED_FIELD";
+export const SET_FOCUSED_FIELD = "SET_FOCUSED_FIELD";
+export const DUMMY = "DUMMY";

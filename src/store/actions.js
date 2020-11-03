@@ -192,3 +192,19 @@ export const markModifiedField = (localIndex) => {
         index : localIndex
     }
 }
+
+export const setFocusedField = (localIndex, field) => {
+    if (!localIndex || localIndex < 0 || !field)  {
+        return { 
+            type: actionTypes.DUMMY,
+        }
+    }
+    console.log("Action Set focused field-index: " + field.index);
+    console.log("Action Set focused field-row: " + field.row);
+
+    return {
+        type : actionTypes.SET_FOCUSED_FIELD,
+        focusedField : field,
+        index : localIndex
+    }
+}

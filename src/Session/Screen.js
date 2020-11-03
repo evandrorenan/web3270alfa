@@ -14,6 +14,11 @@ class Screen2 extends Component {
         }
     }
 
+    shouldComponentUpdate() {
+        console.log("screen scu")
+        return true;
+    }
+
     connectionStatus () {
         return this.props.status;
     }
@@ -31,21 +36,47 @@ class Screen2 extends Component {
             }
         }
 
-        return <div className="Screen" key="screen">
-                    <div className="Rows">
-                        {rows.map((row, index) => {
-                            return <p className="Row" key={"row" + index} id={"row" + index}>
-                                        {rows[index].map((field, fieldIndex) => {
-                                            return <Field key={field.fieldId + "_" + this.props.keyNameSufix }
-                                                          id={"Field" + field.fieldId}
-                                                          field={field} /> }
-                                        )}
-                                   </p>}
-                        )}
-                    </div>
-                    <p className="Trailler">{this.connectionStatus()}</p>
-                    <p className="Trailler">Session id: {this.props.sessionId}</p>
+        console.log("Screen focusedField: " + this.props.focusedField);
+
+        return  (
+            <div className="X" >
+                <div className="Title">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;______________&nbsp;_______&nbsp;______&nbsp;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp;(_______(_____&nbsp;(_______)&nbsp;__&nbsp;&nbsp;&nbsp;|<br />
+&nbsp;_&nbsp;_&nbsp;_&nbsp;&nbsp;____|&nbsp;|&nbsp;_&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;____)&nbsp;)&nbsp;&nbsp;&nbsp;&nbsp;_|&nbsp;|&nbsp;//|&nbsp;|<br />
+|&nbsp;|&nbsp;|&nbsp;|/&nbsp;_&nbsp;&nbsp;)&nbsp;||&nbsp;\&nbsp;(___&nbsp;\&nbsp;/_____/&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;)&nbsp;|//&nbsp;|&nbsp;|<br />
+|&nbsp;|&nbsp;|&nbsp;(&nbsp;(/&nbsp;/|&nbsp;|_)&nbsp;)____)&nbsp;)_______&nbsp;&nbsp;&nbsp;/&nbsp;/|&nbsp;&nbsp;/__|&nbsp;|<br />
+&nbsp;\____|\____)____(______/(_______)&nbsp;(_/&nbsp;&nbsp;\_____/
+
                 </div>
+                    <div className="Body">
+                        <div className="Session">
+                            <div className="Screen">
+                                <div className="Screen" key="screen">
+                                    <div className="Rows">
+                                        {rows.map((row, index) => {
+                                            return <p className="Row" key={"row" + index} id={"row" + index}>
+                                                        {rows[index].map((field, fieldIndex) => {
+                                                            return <Field key={field.fieldId + "_" + this.props.keyNameSufix }
+                                                                        id={"Field" + field.fieldId}
+                                                                        field={field} /> }
+                                                        )}
+                                                </p>}
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="TraillerDiv">
+                                <p className="TraillerTitle">Connection details:</p>
+                                <p className="Trailler">
+                                        {this.connectionStatus()}<br/>
+                                        Session id: {this.props.sessionId}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        )
     }
 }
 
@@ -56,7 +87,8 @@ const mapStateToProps = state => {
         keyNameSufix: state.keyNameSufix,
         isConnecting : state.isConnecting,
         isUpdatingScreen : state.isUpdatingScreen,
-        status : state.status
+        status : state.status,
+        focusedField: state.focusedField
     };
 }
 
