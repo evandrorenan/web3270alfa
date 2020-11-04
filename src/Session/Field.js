@@ -49,6 +49,52 @@ class Field extends Component {
           return className;     
      }
 
+     focusNextField = (currentPosition) => {
+          
+          let first = this.props.fields[0].ref.current;
+          let firstUnprot;
+
+          for (let i = 0; i < this.props.fields.length; i++) {
+               if (!this.props.fields[i].protected ) {
+                    if (typeof firstUnprot === "undefined") {
+                         firstUnprot = this.props.fields[i].ref.current;
+                    }
+                    if ( this.props.fields[i].start > currentPosition ) {
+                         this.props.setFocus(this.props.fields[i].ref.current);
+                         return;
+                    }
+               }
+          }
+
+          if (typeof firstUnprot !== "undefined") {
+               if (firstUnprot !== this.state.currentField.ref.current) {
+                    this.props.setFocus(firstUnprot);
+               }
+          } else {
+               this.props.setFocus(first);
+          }
+     }
+
+     focusPreviousField = (currentPosition) => {
+          
+          const last = this.props.fieldPos[this.props.fieldPos.length - 1] + 1;
+
+          for (let i = this.props.length - 1; i > 0; i--) {
+               if (( this.props.fieldPos[i] + 1) > currentPosition) {
+                    if (this.props.fields[this.props.fieldPos[i]].ref.current) {
+                         this.props.setFocus(
+                              this.state.fields[this.props.fieldPos[i]].ref.current);
+                         return;
+                    }
+               }
+          }
+
+          if (this.state.fields[last].ref.current) {
+               this.props.setFocus(this.state.fields[last].ref.current);
+               return;
+          }
+     }
+
      shouldComponentUpdate(nextProps, nextState) {
           return true;
      }
@@ -58,35 +104,35 @@ class Field extends Component {
           if (this.props.cursorPos === this.rcPosition()){
                if (this.state.currentField.ref.current) {
                     this.state.currentField.ref.current.focus();
-                    this.props.setFocusedField (
-                         index,
-                         this.state.currentField );          
+                    // this.props.setFocusedField (
+                    //      index,
+                    //      this.state.currentField );          
                     return;
                }
 
           }
           
-          if ( !this.props.focusedField && index === 1919) {
-               this.state.currentField.ref.current.focus();
-               this.props.setFocusedField (
-                    index,
-                    this.state.currentField );          
-          }
+          // if ( !this.props.focusedField && index === 1919) {
+          //      this.state.currentField.ref.current.focus();
+          //      this.props.setFocusedField (
+          //           index,
+          //           this.state.currentField );          
+          // }
      }
 
      onfocus = (event) => {
           event.target.selectionStart = 0;
           event.target.selectionEnd = 0;
-          this.props.setFocusedField(
-               this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
-               this.state.currentField);
+          // this.props.setFocusedField(
+          //      this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
+          //      this.state.currentField);
      }
 
      onblur = (event) => {
-          this.props.setFieldText(
-               this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
-               event.target.value);
-          this.props.setFocusedField(null, null);
+          // this.props.setFieldText(
+          //      this.props.fields.findIndex(field => field.fieldId === getFieldId(event.target)),
+          //      event.target.value);
+          // this.props.setFocusedField(null, null);
      }
 
      onchange = (event) => {
@@ -119,6 +165,18 @@ class Field extends Component {
                }
                this.markModified();
                event.target.selectionEnd = event.target.selectionStart + 1;
+          }
+          if (event.key === "Home") {
+               this.focusNextField(0);       
+          }
+          if (event.key === "Tab") {
+               if (event.shiftKey) {
+                    this.focusPreviousField(this.state.currentField.start);
+                    event.preventDefault();
+                } else {
+                    this.focusNextField(this.state.currentField.start);
+                    event.preventDefault();
+                }      
           }
      }
 
@@ -155,7 +213,8 @@ const mapStateToProps = state => {
           fields: state.fields,
           sessionId: state.sessionId,
           cursorPos: state.cursorPos,
-          focusedField: state.focusedField
+          // focusedField: state.focusedField,
+          fieldPos: state.fieldPos
      };
 }
  
@@ -166,7 +225,8 @@ const mapDispatchToProps = dispatch => {
                     dispatch(actionCreators.sendKeys(row, col, text, functionKey, fields, sessionId)),
          setFieldText: (index, text) => dispatch(actionCreators.setFieldText(index, text)),
          markModifiedField: (index) => dispatch(actionCreators.markModifiedField(index)),
-         setFocusedField: (index, currentField) => dispatch(actionCreators.setFocusedField(index, currentField))
+     //     setFocusedField: (index, currentField) => dispatch(actionCreators.setFocusedField(index, currentField))         ,
+         setFocus: (field) => dispatch(actionCreators.setFocus(field))
      }
  }
 

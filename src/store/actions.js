@@ -99,10 +99,13 @@ const getScreenResponseHandler = (response) => {
 }
 
 export const getScreenAction = (responseData) => {
+    console.log("fieldPos: " + responseData.fieldPos[0]);
+
     return {
         type: actionTypes.GET_SCREEN,
         positions: responseData.positions,
         fields: responseData.fields,
+        fieldPos: responseData.fieldPos,
         cursorPos: responseData.cursorPos,
         sessionId : responseData.sessionId
     };
@@ -206,5 +209,12 @@ export const setFocusedField = (localIndex, field) => {
         type : actionTypes.SET_FOCUSED_FIELD,
         focusedField : field,
         index : localIndex
+    }
+}
+
+export const setFocus = (field) => {
+    return {
+        type: actionTypes.SET_FOCUS,
+        field: field
     }
 }

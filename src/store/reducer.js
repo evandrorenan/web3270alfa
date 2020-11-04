@@ -60,9 +60,11 @@ const reducer = (state = initialState, action) => {
             return state;
         
         case actionTypes.GET_SCREEN:
+            console.log("fieldPos: " + action.fieldPos);
             newState = Object.assign({}, state);
+            newState.fieldPos = action.fieldPos;
             newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
-            newState.positions = action.positions;
+            // newState.positions = action.positions;
             newState.fields = action.fields;
             newState.cursorPos = action.cursorPos;
             newState.sessionId = action.sessionId;
@@ -85,7 +87,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.UPDATE_POSITION_TEXT:
             state.fields[action.index].modified = true; 
             state.fields[action.index].text = action.text; 
-            break;
+            return state;
 
         case actionTypes.SET_FIELD_TEXT:
             state.fields[action.index].text = action.text;
@@ -100,6 +102,10 @@ const reducer = (state = initialState, action) => {
             console.log("Set focused field-row: " + action.focusedField.row);
             state.fields[action.index].focusedField = action.focusedField;
             return state;    
+
+        case actionTypes.SET_FOCUS:
+            action.field.focus();
+            return state;
                 
         default:
             break;
