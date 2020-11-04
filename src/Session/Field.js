@@ -77,21 +77,27 @@ class Field extends Component {
 
      focusPreviousField = (currentPosition) => {
           
-          const last = this.props.fieldPos[this.props.fieldPos.length - 1] + 1;
+          let last = this.props.fields[this.props.fields.length -1].ref.current;
+          let lastUnprot;
 
-          for (let i = this.props.length - 1; i > 0; i--) {
-               if (( this.props.fieldPos[i] + 1) > currentPosition) {
-                    if (this.props.fields[this.props.fieldPos[i]].ref.current) {
-                         this.props.setFocus(
-                              this.state.fields[this.props.fieldPos[i]].ref.current);
+          for (let i = this.props.fields.length -1; i > -1; i--) {
+               if (!this.props.fields[i].protected ) {
+                    if (typeof lastUnprot === "undefined") {
+                         lastUnprot = this.props.fields[i].ref.current;
+                    }
+                    if ( this.props.fields[i].start < currentPosition ) {
+                         this.props.setFocus(this.props.fields[i].ref.current);
                          return;
                     }
                }
           }
 
-          if (this.state.fields[last].ref.current) {
-               this.props.setFocus(this.state.fields[last].ref.current);
-               return;
+          if (typeof lastUnprot !== "undefined") {
+               if (lastUnprot !== this.state.currentField.ref.current) {
+                    this.props.setFocus(lastUnprot);
+               }
+          } else {
+               this.props.setFocus(last);
           }
      }
 
@@ -142,6 +148,7 @@ class Field extends Component {
      }
 
      onkeydown = (event) => {
+          console.log("KD-event.target.selectionStart:" + event.target.selectionStart)
           if (isFunctionKey(event)) {
                this.markModified();
                // this.props.setFieldText(
@@ -181,8 +188,9 @@ class Field extends Component {
      }
 
      onkeyup = (event) => {
-          if (isTypedChar(event)) {
-               // event.target.selectionEnd++;
+          if (isTypedChar(event)
+          && event.target.maxLength === event.target.selectionStart) {
+               this.focusNextField(this.state.currentField.start);
           }     
      }
 

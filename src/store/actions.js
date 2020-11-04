@@ -124,7 +124,7 @@ const buildRequestBody = (row, col, currentFieldText, userFunctionKey, fields, s
                 requestBody.sendKeys.push({
                     row : fields[i].row,
                     col : fields[i].col,
-                    text : fields[i].text,
+                    text : fields[i].ref.current.value,
                     // text : ((fields[i].text + Array(fields[i].length).join(' ')).substr(0, fields[i].length)),
                     functionKey : ""
                 })
