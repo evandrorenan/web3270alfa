@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { isFunctionKey, isTypedChar }        from "../KeyEvents/KeyTipe";
+import { isFunctionKey, isTypedChar, isArrowKey }        from "../KeyEvents/KeyTipe";
 import { connect }            from 'react-redux';
 import * as actionCreators    from "../store/actions";
 import { getPfkey }           from '../KeyEvents/HandleFunctionKey';
@@ -184,6 +184,32 @@ class Field extends Component {
                     this.focusNextField(this.state.currentField.start);
                     event.preventDefault();
                 }      
+          }
+          if (event.key === "ArrowUp" ) {
+               this.findField(
+                    this.state.currentField.row === 1 ? 24 : this.state.currentField.row - 1,
+                    this.state.currentField.col + event.target.selectionStart);
+               event.preventDefault();
+          } 
+          if (event.key === "ArrowDown" ) {
+               this.findField(
+                    this.state.currentField.row === 24 ? 1 : this.state.currentField.row + 1,
+                    this.state.currentField.col + event.target.selectionStart);
+               event.preventDefault();
+          } 
+     }
+
+     findField = (row, column) => {
+          for (let i = 0; i < this.props.fields.length; i++) {
+               let field = this.props.fields[i];
+               if ( field.row === row) {
+                    if ( field.col <= column
+                    &&   field.col >= column - field.length) {
+                         field.ref.current.focus();
+                         field.ref.current.selectionStart = column - field.col;
+                         field.ref.current.selectionEnd = field.ref.current.selectionStart;
+                    }
+               }
           }
      }
 

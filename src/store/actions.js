@@ -39,7 +39,7 @@ export const newSessionAsync = () => {
     }
     return dispatch => {
         dispatch(setStatus(STATUS_CONNECTING));
-        axios.post ("http://localhost:8080/newsession", body, { crossdomain: true })
+        axios.post ("http://localhost:3000/newsession", body)
             .then ( response => { 
                 dispatch(newSessionResponseHandler(response));
             });
@@ -71,7 +71,7 @@ export const getScreenAsync = (sessionId) => {
         }
     }
     return dispatch => {
-        axios.get ("http://localhost:8080/session/" + sessionId + "/screen", { crossdomain: true })
+        axios.get ("http://localhost:3000/session/" + sessionId + "/screen")
             .then ( response => { 
                 dispatch(setStatus(STATUS_READY));
                 dispatch(getScreenResponseHandler(response));
@@ -86,7 +86,7 @@ export const getScreenFieldsAsync = (sessionId) => {
         }
     }
     return dispatch => {
-        axios.get ("http://localhost:8080/session/" + sessionId + "/screenfields", { crossdomain: true })
+        axios.get ("http://localhost:3000/session/" + sessionId + "/screenfields")
             .then ( response => { 
                 dispatch(setStatus(STATUS_READY));
                 dispatch(getScreenResponseHandler(response));
@@ -172,7 +172,7 @@ export const sendKeys = (row, col, currentFieldText, functionKey, fields, sessio
         console.log("A");
         dispatch(setStatus(STATUS_SENDING_INPUT_DATA));
         console.log("b");
-        axios.post ("http://localhost:8080/session/sendkeys", requestBody, { crossdomain: true })
+        axios.post ("http://localhost:3000/session/sendkeys", requestBody)
         .then ( response => { 
                 console.log("c");
                 dispatch(setStatus(STATUS_READY));
