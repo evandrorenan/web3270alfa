@@ -115,16 +115,13 @@ const buildRequestBody = (row, col, currentFieldText, userFunctionKey, fields, s
     let requestBody = {};
     requestBody.sessionId = sessionId;
     requestBody.sendKeys = [];
-    let currentFieldLen = 0;
     for (let i = 0; i < fields.length; i++) {
         if (fields[i].modified ) {
-            if (fields[i].row === row && fields[i].col === col ) {
-                currentFieldLen = fields[i].length;
-            } else {
+            if (!(fields[i].row === row && fields[i].col === col )) {
                 requestBody.sendKeys.push({
                     row : fields[i].row,
                     col : fields[i].col,
-                    text : fields[i].ref.current.value,
+                    text : fields[i].ref.current.value.trimEnd(),
                     // text : ((fields[i].text + Array(fields[i].length).join(' ')).substr(0, fields[i].length)),
                     functionKey : ""
                 })
@@ -135,7 +132,7 @@ const buildRequestBody = (row, col, currentFieldText, userFunctionKey, fields, s
     requestBody.sendKeys.push({
         row : row,
         col : col,
-        text : currentFieldText,
+        text : currentFieldText.trimEnd(),
         // text : ((currentFieldText + Array(currentFieldLen).join(' ')).substr(0, currentFieldLen)),
         functionKey : userFunctionKey }); 
     return requestBody;
