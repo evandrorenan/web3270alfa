@@ -5,8 +5,10 @@ import * as actionCreators  from "../store/actions";
 
 import './Screen.css';
 import './Position.css';
+import ProgramReport from './ProgramReport';
+import DataDivisionMap from './DataDivisionMap';
 
-class Screen2 extends Component {
+class Screen extends Component {
     
     componentDidMount() {
         if (!this.props.sessionId) {
@@ -39,7 +41,7 @@ class Screen2 extends Component {
         console.log("Screen focusedField: " + this.props.focusedField);
 
         return  (
-            <div className="X" >
+            <div >
                 <div className="Title">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;______________&nbsp;_______&nbsp;______&nbsp;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp;(_______(_____&nbsp;(_______)&nbsp;__&nbsp;&nbsp;&nbsp;|<br />
@@ -49,32 +51,36 @@ class Screen2 extends Component {
 &nbsp;\____|\____)____(______/(_______)&nbsp;(_/&nbsp;&nbsp;\_____/
 
                 </div>
-                    <div className="Body">
-                        <div className="Session">
-                            <div className="Screen">
-                                <div className="Screen" key="screen">
-                                    <div className="Rows">
-                                        {rows.map((row, index) => {
-                                            return <p className="Row" key={"row" + index} id={"row" + index}>
-                                                        {rows[index].map((field, fieldIndex) => {
-                                                            return <Field key={field.fieldId + "_" + this.props.keyNameSufix }
-                                                                        id={"Field" + field.fieldId}
-                                                                        field={field} /> }
-                                                        )}
-                                                </p>}
-                                        )}
-                                    </div>
+                <div className="Body">
+                    <div className="Session">
+                        <div className="Screen">
+                            <div className="Screen" key="screen">
+                                <div className="Rows">
+                                    {rows.map((row, index) => {
+                                        return <p className="Row" key={"row" + index} id={"row" + index}>
+                                                    {rows[index].map((field, fieldIndex) => {
+                                                        return <Field key={field.fieldId + "_" + this.props.keyNameSufix }
+                                                                    id={"Field" + field.fieldId}
+                                                                    field={field} /> }
+                                                    )}
+                                            </p>}
+                                    )}
                                 </div>
                             </div>
-                            <div className="TraillerDiv">
-                                <p className="TraillerTitle">Connection details:</p>
-                                <p className="Trailler">
-                                        {this.connectionStatus()}<br/>
-                                        Session id: {this.props.sessionId}
-                                </p>
-                            </div>
+                        </div>
+                        <div className="TraillerDiv">
+                            <p className="TraillerTitle">Connection details:</p>
+                            <p className="Trailler">
+                                    {this.connectionStatus()}<br/>
+                                    Session id: {this.props.sessionId}
+                            </p>
                         </div>
                     </div>
+                </div>
+
+                <DataDivisionMap />
+                <ProgramReport />
+
             </div>
         )
     }
@@ -100,4 +106,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 // connect returns a function that receives State and Actions and pass it to Screen component via props.
-export default connect(mapStateToProps, mapDispatchToProps)(Screen2);
+export default connect(mapStateToProps, mapDispatchToProps)(Screen);
