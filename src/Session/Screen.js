@@ -42,7 +42,7 @@ class Screen extends Component {
 
         return  (
             <div >
-                <div className="Title">
+                {/* <div className="Title">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_&nbsp;&nbsp;&nbsp;&nbsp;______________&nbsp;_______&nbsp;______&nbsp;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;|&nbsp;&nbsp;(_______(_____&nbsp;(_______)&nbsp;__&nbsp;&nbsp;&nbsp;|<br />
 &nbsp;_&nbsp;_&nbsp;_&nbsp;&nbsp;____|&nbsp;|&nbsp;_&nbsp;&nbsp;&nbsp;____&nbsp;&nbsp;&nbsp;____)&nbsp;)&nbsp;&nbsp;&nbsp;&nbsp;_|&nbsp;|&nbsp;//|&nbsp;|<br />
@@ -50,7 +50,7 @@ class Screen extends Component {
 |&nbsp;|&nbsp;|&nbsp;(&nbsp;(/&nbsp;/|&nbsp;|_)&nbsp;)____)&nbsp;)_______&nbsp;&nbsp;&nbsp;/&nbsp;/|&nbsp;&nbsp;/__|&nbsp;|<br />
 &nbsp;\____|\____)____(______/(_______)&nbsp;(_/&nbsp;&nbsp;\_____/
 
-                </div>
+                </div> */}
                 <div className="Body">
                     <div className="Session">
                         <div className="Screen">
@@ -79,7 +79,7 @@ class Screen extends Component {
                 </div>
 
                 <DataDivisionMap />
-                <ProgramReport />
+                {/* <ProgramReport /> */}
 
             </div>
         )

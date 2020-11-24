@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { programReport } from './ProgramReportObjects';
-import { dataDivisionMap } from './ProgramReportObjects';
+import { programReportObject } from './ProgramReportObjects';
 
 import './ProgramReport.css';
 
@@ -9,7 +8,7 @@ const ProgramReport = (props) => {
 
     return <div className="SourceDiv">
             <p>Program Report</p>
-            {programReport.lines.map((line) => {
+            {programReportObject.lines.map((line) => {
                 return <div className="ProgramLine" key={"line" + line.lindeId}>
                         <div className="SourceCodeLine" key={"sourceCodeLine" + line.lindeId}>
                             {line.sourceCodeLine}
