@@ -1,19 +1,17 @@
 .Toolbar {
-    height: 56px;
-    color: cyan;
-    width: 100%;
-    position: fixed;
+    background-image: linear-gradient(to right, black , lightgray);
+    height: 54px;
     top: 0;
     left: 0;
-    background-image: linear-gradient(to right, black , lightgray);
-    display: flex;
+    color: cyan;
+    width: 100%;
     align-items: center;
-    padding: 0 20px;
     box-sizing: border-box;
-    z-index: 90px;
+    font-size: large;
+    padding-left: 15px;
+    border: none;
+    display: flex;
+
 }
 
-.Toolbar nav {
-    height: 100%;
-}
 

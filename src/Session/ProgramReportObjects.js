@@ -56044,3 +56044,46 @@ export const programReportObject =
         }
     ]
 }
+
+export const fixedDatadivision = [        {
+    "hexContent": [
+        "5C4040C9D5C9C3C9D640C4C140E6D6D9D2C9D5C7406040C3D4D9E4F3C6C3C35C"
+    ],
+    "ebcdicContent": [
+        "*  INICIO DA WORKING - CMRU3FCC*"
+    ],
+    "lineId": 44,
+    "dataHierarchy": "1",
+    "dataName": "FILLER",
+    "baseLocatorType": "BLW",
+    "baseLocatorId": "00000",
+    "baseLocatorShift": "000",
+    "dataStructurePosition": "",
+    "assemblerDataDefinition": "DS 32C",
+    "dataType": "Display",
+    "dataDefAttribute": "",
+    "valid": true,
+    "numericDataLength": 32,
+    "numericOffset": 0
+},
+{
+    "hexContent": [
+        "5C404040C1D9C5C1E240C1E4E7C9D3C9C1D9C5E240404040404040404040405C"
+    ],
+    "ebcdicContent": [
+        "*   AREAS AUXILIARES           *"
+    ],
+    "lineId": 49,
+    "dataHierarchy": "1",
+    "dataName": "FILLER",
+    "baseLocatorType": "BLW",
+    "baseLocatorId": "00000",
+    "baseLocatorShift": "020",
+    "dataStructurePosition": "",
+    "assemblerDataDefinition": "DS 32C",
+    "dataType": "Display",
+    "dataDefAttribute": "",
+    "valid": true,
+    "numericDataLength": 32,
+    "numericOffset": 32
+}];

@@ -1,26 +1,19 @@
 import React from 'react';
 
-import { programReportObject } from './ProgramReportObjects';
-
 import './ProgramReport.css';
+import * as report from './ProgramReportObjects';
 
 const ProgramReport = (props) => {
 
+    const arrProgramReport = report.programReportObject.sourceCode;
+
     return <div className="SourceDiv">
             <p>Program Report</p>
-            {programReportObject.lines.map((line) => {
+            {arrProgramReport.map((line) => {
                 return <div className="ProgramLine" key={"line" + line.lindeId}>
+                        <div className="var"/>
                         <div className="SourceCodeLine" key={"sourceCodeLine" + line.lindeId}>
-                            {line.sourceCodeLine}
-                        </div>
-                        <div className="DataContents" key={"dataContents" + line.lindeId}>
-                            {line.dataContents.map((dataContent, index) => {
-                                return <div className="DataContent" key={"dataContent" + line.lindeId + "_" + index}>
-                                        <div className="DataName">{dataContent.dataName}</div>
-                                        <div className="DataEbcdicContent">{dataContent.dataEbcdicContent}</div>
-                                        <div className="DataHexContent">{dataContent.dataHexContent}</div>
-                                </div>                                            
-                            })}
+                            {line.text}
                         </div>
                 </div>
             })}
