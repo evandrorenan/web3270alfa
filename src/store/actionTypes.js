@@ -10,3 +10,4 @@ export const MARK_MODIFIED_FIELD = "MARK_MODIFIED_FIELD";
 export const SET_FOCUSED_FIELD = "SET_FOCUSED_FIELD";
 export const SET_FOCUS = "SET_FOCUS";
 export const DUMMY = "DUMMY";
+export const SET_REPORT_OBJECT = "SET_REPORT_OBJECT";

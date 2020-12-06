@@ -215,3 +215,31 @@ export const setFocus = (field) => {
         field: field
     }
 }
+
+export const requestAbendReport = (request) => {
+    const payload = {
+        "compilationJobid": request.compilationJobid,
+        "user": request.user,
+        "password": request.password,
+        "programName": request.programName,
+        "abendId": request.abendId,
+        "abendFile": request.abendFile,
+        "compilationReport": null, 
+        "baseLocators": null
+    }
+
+    return dispatch => {
+        axios.post ("http://localhost:3000/", payload)
+            .then ( response => { 
+                dispatch(requestAbendResponseHandler(response));
+            });
+    };
+}
+
+export const requestAbendResponseHandler = (response) => {
+        return {
+            type: actionTypes.SET_REPORT_OBJECT,
+            data: response
+        }
+    }
+}

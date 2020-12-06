@@ -1,0 +1,8 @@
+.RequestReportForm {
+    margin: auto;
+    width: 600px;
+    padding: 10px 50px;
+    border: 1px #ccc solid;
+    background-color: white;
+    font: inherit;
+}

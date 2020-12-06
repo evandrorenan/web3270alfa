@@ -106,6 +106,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_FOCUS:
             action.field.focus();
             return state;
+
+        case actionTypes.SET_REPORT_OBJECT:
+            // update Content subcomponents with response
+            break;
                 
         default:
             break;
