@@ -37,6 +37,8 @@ const initialFields = () => {
 }
 
 const initialState = {  
+    report: {},
+    requestReport : {},
     sessionId : null,
     screenId : null,
     fields: initialFields(),

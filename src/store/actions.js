@@ -237,9 +237,8 @@ export const requestAbendReport = (request) => {
 }
 
 export const requestAbendResponseHandler = (response) => {
-        return {
-            type: actionTypes.SET_REPORT_OBJECT,
-            data: response
-        }
+    return {
+        type: actionTypes.SET_REPORT_OBJECT,
+        data: response
     }
 }

@@ -1,23 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect          } from 'react-redux';
 
 import './ProgramReport.css';
-import * as report from './ProgramReportObjects';
 
-const ProgramReport = (props) => {
+class ProgramReport extends Component {
 
-    const arrProgramReport = report.programReportObject.sourceCode;
+    constructor(props) {
+        super();
+    }
 
-    return <div className="SourceDiv">
-            <p>Program Report</p>
-            {arrProgramReport.map((line) => {
-                return <div className="ProgramLine" key={"line" + line.lindeId}>
-                        <div className="var"/>
-                        <div className="SourceCodeLine" key={"sourceCodeLine" + line.lindeId}>
-                            {line.text}
-                        </div>
-                </div>
-            })}
-    </div> 
+    
+
+    render() {
+
+        return (<div className="SourceDiv">
+                <p>Program Report</p>
+                { typeof this.props.report.programReportObject === 'undefined' ? "" :
+                    this.state.report.programReportObject.sourceCode.map((line) => {
+                    return <div className="ProgramLine" key={"line" + line.lindeId}>
+                            <div className="var"/>
+                            <div className="SourceCodeLine" key={"sourceCodeLine" + line.lindeId}>
+                                {line.text}
+                            </div>
+                    </div>
+                })}
+        </div>);
+    }
 }
 
-export default ProgramReport;
+const mapStateToProps = (state) => {
+    return { report : state.report };
+}
+
+export default connect(mapStateToProps)(ProgramReport);
