@@ -1,21 +1,5 @@
 import * as actionTypes from "../store/actionTypes";
 
-const initialPositions = () => {
-    let positions = [];
-    for (let i = 0; i < 1920; i++) {
-        positions.push({
-            positionId : i,
-            text: " ",
-            protected : false,
-            hidden : false,
-            highLight : false,
-            modified : false,
-            ref : null }
-        )
-    }
-    return positions;
-}
-
 const initialFields = () => {
     let fields = [];
     for (let i = 0; i < 24; i++) {
@@ -38,7 +22,7 @@ const initialFields = () => {
 
 const initialState = {  
     report: {},
-    requestReport : {},
+    requestReport : { sourceCode : [], dataDivisionMap : [] },
     sessionId : null,
     screenId : null,
     fields: initialFields(),
@@ -53,65 +37,59 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    let newState;
+    let newState = Object.assign({}, state);
     switch (action.type) {
 
         case actionTypes.NEW_SESSION:
-            state.sessionId = action.sessionId;
-            state.isConnecting = action.isConnecting;
-            return state;
+            newState.sessionId = action.sessionId;
+            newState.isConnecting = action.isConnecting;
+            return newState;
         
         case actionTypes.GET_SCREEN:
-            console.log("fieldPos: " + action.fieldPos);
-            newState = Object.assign({}, state);
             newState.fieldPos = action.fieldPos;
             newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
-            // newState.positions = action.positions;
             newState.fields = action.fields;
             newState.cursorPos = action.cursorPos;
             newState.sessionId = action.sessionId;
             return newState;
 
         case actionTypes.GET_SCREEN_FIELDS:
-            newState = Object.assign({}, state);
             newState.keyNameSufix = state.keyNameSufix === 1 ? 1920 : 1;
             newState.fields = action.fields;
             return newState;
     
         case actionTypes.SET_STATUS:
-            state.status = action.status;
-            return state;
+            newState.status = action.status;
+            return newState;
 
         case actionTypes.CREATE_REF:            
-            state.fields[action.index].ref = action.ref;
-            return state;
+            newState.fields[action.index].ref = action.ref;
+            return newState;
 
         case actionTypes.UPDATE_POSITION_TEXT:
-            state.fields[action.index].modified = true; 
-            state.fields[action.index].text = action.text; 
-            return state;
+            newState.fields[action.index].modified = true; 
+            newState.fields[action.index].text = action.text; 
+            return newState;
 
         case actionTypes.SET_FIELD_TEXT:
-            state.fields[action.index].text = action.text;
-            return state;
+            newState.fields[action.index].text = action.text;
+            return newState;
 
         case actionTypes.MARK_MODIFIED_FIELD:
-            state.fields[action.index].modified = true;
-            return state;
+            newState.fields[action.index].modified = true;
+            return newState;
 
         case actionTypes.SET_FOCUSED_FIELD:
-            console.log("Set focused field-index: " + action.index);
-            console.log("Set focused field-row: " + action.focusedField.row);
-            state.fields[action.index].focusedField = action.focusedField;
-            return state;    
+            newState.fields[action.index].focusedField = action.focusedField;
+            return newState;    
 
         case actionTypes.SET_FOCUS:
             action.field.focus();
             return state;
 
         case actionTypes.SET_REPORT_OBJECT:
-            // update Content subcomponents with response
-            break;
+            newState.report = action.report;
+            return newState;
                 
         default:
             break;

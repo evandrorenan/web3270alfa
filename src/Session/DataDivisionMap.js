@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
+import { connect          } from 'react-redux';
 
 import './DataDivisionMap.css';
-import * as report from './ProgramReportObjects';
 
 class DataDivisionMap extends Component {
 
     constructor(props) {
         super();
         this.state = { 
-            arrDataDivision: report.programReportObject.dataDivisionMap,
-            fixedDatadivision: report.fixedDatadivision
+            fixedDatadivision: []
         }
-        
     }
 
     onclickfixed = (event) => {
@@ -34,7 +32,7 @@ class DataDivisionMap extends Component {
     }
     
     render() {
-
+        console.log("Data Division Map" + this.props.dataDivisionMap);
         return (
             <div className="DataDivision">
                 <div class="DataItemsList">
@@ -45,6 +43,12 @@ class DataDivisionMap extends Component {
                         </div>
                         <div className="DataDivRight" key={"dataDivisionItem_dataContent_"}>
                             Content
+                        </div>
+                        <div className="DataDivHex" key={"dataDivisionItem_dataContent_"}>
+                            Hex content
+                        </div>
+                        <div className="ToogleHex" key={"toogleHex_line_"}>
+                            Hex
                         </div>
                     </div>
 
@@ -58,10 +62,18 @@ class DataDivisionMap extends Component {
                                     {dataDivisionItem.ebcdicContent[0].substring(0, 
                                         dataDivisionItem.ebcdicContent[0].length > 50 ? 50 : dataDivisionItem.ebcdicContent[0].length) }
                                 </div>
+                                <div className="DataDivHex" key={"dataHexDivisionItem_line_" + index}>
+                                    {dataDivisionItem.hexContent[0].substring(0, 
+                                            dataDivisionItem.hexContent[0].length > 50 ? 50 : dataDivisionItem.hexContent[0].length) }
+                                </div>
+                                <div className="ToogleHex" key={"toogleHex_line_" + index}>
+                                    <input type="checkbox" id={"fixedCheckboxHex" + index}  />
+                                </div>
                     </div>                                            
                     })}
 
-                    {this.state.arrDataDivision.map((dataDivisionItem, index) => {
+                    {typeof this.props.report.dataDivisionMap === 'undefined' ? "" :
+                     this.props.report.dataDivisionMap.map((dataDivisionItem, index) => {
                         return  <div className="DataDiv" key={"dataDiv" + index}>
                                     <input type="checkbox" id={"checkbox" + index} onClick={this.onclicknormal} />
                                     <div className="DataDivLeft" key={"dataDivisionItem_line_" + index}>
@@ -70,6 +82,13 @@ class DataDivisionMap extends Component {
                                     <div className="DataDivRight" key={"dataDivisionItem_line_" + index}>
                                         {dataDivisionItem.ebcdicContent[0].substring(0, 
                                             dataDivisionItem.ebcdicContent[0].length > 50 ? 50 : dataDivisionItem.ebcdicContent[0].length) }
+                                    </div>
+                                    <div className="DataDivHex" key={"dataHexDivisionItem_line_" + index}>
+                                        {dataDivisionItem.hexContent[0].substring(0, 
+                                            dataDivisionItem.hexContent[0].length > 50 ? 50 : dataDivisionItem.hexContent[0].length) }
+                                    </div>
+                                    <div className="ToogleHex" key={"toogleHex_line_" + index}>
+                                        <input type="checkbox" id={"checkboxHex" + index}  />
                                     </div>
                         </div>                                            
                     })}
@@ -83,4 +102,8 @@ class DataDivisionMap extends Component {
     );}
 }
 
-export default DataDivisionMap;
+const mapStateToProps = (state) => {
+    return { report : state.report };
+}
+
+export default connect(mapStateToProps)(DataDivisionMap);

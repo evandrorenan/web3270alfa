@@ -10,9 +10,9 @@ class Layout extends Component {
     constructor() {
         super();
         this.state = { 
-            items:[{ id:"SessionItem", name:"Session", isActive: false } ,
+            items:[{ id:"SessionItem", name:"Session", isActive: true } ,
                    { id:"Report", name:"Abend Report", isActive: false },
-                   { id:"RequestReport", name:"Request new abend Report", isActive: true}]};
+                   { id:"RequestReport", name:"Request new abend Report", isActive: false }]};
     }
 
     onclick = (event) => {

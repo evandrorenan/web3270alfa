@@ -56046,3 +56046,661 @@ export const programReportObject =
 }
 
 export const fixedDatadivision = [];
+
+export const programResponse = {
+    data : {
+        "sourceCode": [
+            {
+                "lineId": 19,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 20,
+                "text": "      *================================================================*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 21,
+                "text": "       DATA                            DIVISION.                        ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 22,
+                "text": "      *================================================================*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 23,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 24,
+                "text": "      *----------------------------------------------------------------*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 25,
+                "text": "       WORKING-STORAGE                 SECTION.                         ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 26,
+                "text": "      *----------------------------------------------------------------*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 27,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 28,
+                "text": "       01  FILLER.                                                      ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 29,
+                "text": "           03  WRK-LITERAL             PIC  X(10) VALUE '* INICIO *'.   ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 30,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 31,
+                "text": "       01  WRK-GRUPO1.                                                  ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 32,
+                "text": "           03  WRK-LITERAL1      PIC  X(16) VALUE '0123456789ABCDEF'.   ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 33,
+                "text": "           03  WRK-LITERAL2      PIC  X(16) VALUE 'FEDCBA9876543210'.   ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 34,
+                "text": "           03  WRK-COMP-3        PIC  9(05) COMP-3 VALUE 225.           ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 35,
+                "text": "           03  WRK-COMP-2        COMP-2            VALUE ZEROS.         ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 36,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 37,
+                "text": "       01  WRK-GRUPO2.                                                  ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 38,
+                "text": "           03  WRK-RESULT        PIC  9(05) COMP-3 VALUE 225.           ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 39,
+                "text": "           03  WRK-NUM1          PIC  9(05) COMP-3 VALUE 225.           ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 40,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 41,
+                "text": "       01  FILLER.                                                      ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 42,
+                "text": "           03  WRK-FIM                 PIC  X(10) VALUE '* FIM    *'.   ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 43,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 44,
+                "text": "      *================================================================*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 45,
+                "text": "       PROCEDURE                       DIVISION.                        ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 46,
+                "text": "      *================================================================*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 47,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 48,
+                "text": "      *----------------------------------------------------------------*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 49,
+                "text": "       0000-INICIO                     SECTION.                         ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 50,
+                "text": "      *----------------------------------------------------------------*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 51,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 52,
+                "text": "           MOVE LOW-VALUES             TO WRK-GRUPO2.                   ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 53,
+                "text": "           COMPUTE WRK-RESULT EQUAL WRK-NUM1 / 2.                       ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": true
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 54,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 55,
+                "text": "           GOBACK.                                                      ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 56,
+                "text": "                                                                        ",
+                "tokens": []
+            },
+            {
+                "lineId": 57,
+                "text": "      *----------------------------------------------------------------*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 58,
+                "text": "       0000-99-EXIT.                   EXIT.                            ",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    },
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            },
+            {
+                "lineId": 59,
+                "text": "      *----------------------------------------------------------------*",
+                "tokens": [
+                    {
+                        "dataReference": null,
+                        "reservedWord": false
+                    }
+                ]
+            }
+        ],
+        "dataDivisionMap": [
+            {
+                "hexContent": [
+                    "00000000000000005C40"
+                ],
+                "ebcdicContent": [
+                    "........* "
+                ],
+                "lineId": 41,
+                "dataHierarchy": "1",
+                "dataName": "FILLER",
+                "baseLocatorType": "BLW",
+                "baseLocatorId": "00000",
+                "baseLocatorShift": "048",
+                "dataStructurePosition": "",
+                "assemblerDataDefinition": "DS 0CL10",
+                "dataType": "Group",
+                "dataDefAttribute": "",
+                "valid": true,
+                "numericOffset": 72,
+                "numericDataLength": 10
+            },
+            {
+                "hexContent": [
+                    "00000000000000005C40"
+                ],
+                "ebcdicContent": [
+                    "........* "
+                ],
+                "lineId": 42,
+                "dataHierarchy": "2",
+                "dataName": "WRK-FIM",
+                "baseLocatorType": "BLW",
+                "baseLocatorId": "00000",
+                "baseLocatorShift": "048",
+                "dataStructurePosition": "0000000",
+                "assemblerDataDefinition": "DS 10C",
+                "dataType": "Display",
+                "dataDefAttribute": "",
+                "valid": true,
+                "numericOffset": 72,
+                "numericDataLength": 10
+            }
+        ]
+    }
+};

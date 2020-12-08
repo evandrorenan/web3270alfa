@@ -9,14 +9,11 @@ class ProgramReport extends Component {
         super();
     }
 
-    
-
     render() {
-
         return (<div className="SourceDiv">
                 <p>Program Report</p>
-                { typeof this.props.report.programReportObject === 'undefined' ? "" :
-                    this.state.report.programReportObject.sourceCode.map((line) => {
+                { typeof this.props.report.sourceCode === 'undefined' ? "" :
+                    this.props.report.sourceCode.map((line) => {
                     return <div className="ProgramLine" key={"line" + line.lindeId}>
                             <div className="var"/>
                             <div className="SourceCodeLine" key={"sourceCodeLine" + line.lindeId}>

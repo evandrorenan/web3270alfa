@@ -1,6 +1,8 @@
 import axios                from 'axios';
 import * as actionTypes from "../store/actionTypes";
 
+import { programResponse } from "../Session/ProgramReportObjects";
+
 // Functions exported on this class have to return an Action object.
 // All actions has to have a type.
 
@@ -228,17 +230,25 @@ export const requestAbendReport = (request) => {
         "baseLocators": null
     }
 
-    return dispatch => {
-        axios.post ("http://localhost:3000/", payload)
-            .then ( response => { 
-                dispatch(requestAbendResponseHandler(response));
-            });
-    };
+    const response = programResponse;
+
+    return {
+        type: actionTypes.SET_REPORT_OBJECT,
+        report: response.data
+    }
+
+
+    // return dispatch => {
+    //     axios.post ("http://localhost:3000/programreport", payload)
+    //         .then ( response => { 
+    //             dispatch(requestAbendResponseHandler(response));
+    //         });
+    // };
 }
 
 export const requestAbendResponseHandler = (response) => {
     return {
         type: actionTypes.SET_REPORT_OBJECT,
-        data: response
+        report: response.data
     }
 }

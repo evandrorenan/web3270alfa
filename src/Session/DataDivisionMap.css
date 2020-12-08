@@ -1,17 +1,14 @@
-
 .DataDivision {
+    overflow: hidden;
+    margin-left: 10px;
     border: 1px black solid;
     width: 100%;
-    display: block;
-    overflow-y: scroll;
-    margin-left: 10px;
-    padding-left: 10px;
 }
 
 .DataDiv {
     font-family: "Lucida Console", "Courier New", monaco;
     text-align: left;
-    width: 100%;
+    width: 98%;
     font-size: 9pt;
     display: flex;
     border-color: grey;
@@ -33,6 +30,14 @@
 }
 
 .DataDivRight {
+    display: flex;
+    margin: 0;
+    padding: auto;
+    width: 80%;
+    background-color: #fffff0;
+}
+
+.DataDivHex {
     display: flex;
     margin: 0;
     padding: auto;
@@ -99,17 +104,30 @@
 }
 
 .DataItemsList {
-    position: absolute;
-    height: 330px;
+    position: relative;
     overflow-y: scroll;
+    width: 100%;
+    height: 70%;
+    padding-left: 10px;
+}
+    
+.DataItemDetail {
+    width: 100%;
+    height: 30%;
 }
 
 .ContentDetail {
-    position: absolute;
-    margin-top: 345px;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-right: 40px;
 }
 
 .Textarea {
-    width: 577px;
-    height: 160px;
+    width: 95%;
+    padding-right: 12px;
+    margin-top: 10px;
+    position: relative;
+    height: 85%;
+    background-color: #fffff0;
 }
