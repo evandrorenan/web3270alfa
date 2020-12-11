@@ -221,6 +221,8 @@ class Field extends Component {
      }
 
      render() {      
+
+          console.log("ref: " + this.state.currentField.fieldId + " " + this.state.currentField.ref);
           return ( 
                <input 
                     key={"Position" + this.state.currentField.fieldId + this.state.sufix}

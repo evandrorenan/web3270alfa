@@ -10,13 +10,12 @@ class ProgramReport extends Component {
     }
 
     render() {
-        return (<div className="SourceDiv">
-                <p>Program Report</p>
+        return (<div className="SourceDiv" key="SourceDiv">
                 { typeof this.props.report.sourceCode === 'undefined' ? "" :
                     this.props.report.sourceCode.map((line) => {
-                    return <div className="ProgramLine" key={"line" + line.lindeId}>
-                            <div className="var"/>
-                            <div className="SourceCodeLine" key={"sourceCodeLine" + line.lindeId}>
+                    return <div className="ProgramLine" key={"line" + line.lineId}>
+                            <div className="var" key={"var" + line.lineId}/>
+                            <div className="SourceCodeLine" key={"sourceCodeLine" + line.lineId}>
                                 {line.text}
                             </div>
                     </div>

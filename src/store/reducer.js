@@ -21,7 +21,7 @@ const initialFields = () => {
 }
 
 const initialState = {  
-    report: {},
+    report: {  dataDivisionMap : [] },
     requestReport : { sourceCode : [], dataDivisionMap : [] },
     sessionId : null,
     screenId : null,

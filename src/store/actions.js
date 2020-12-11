@@ -230,13 +230,7 @@ export const requestAbendReport = (request) => {
         "baseLocators": null
     }
 
-    const response = programResponse;
-
-    return {
-        type: actionTypes.SET_REPORT_OBJECT,
-        report: response.data
-    }
-
+    return requestAbendResponseHandler(programResponse);
 
     // return dispatch => {
     //     axios.post ("http://localhost:3000/programreport", payload)

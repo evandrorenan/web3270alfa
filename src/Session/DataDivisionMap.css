@@ -22,19 +22,25 @@
     margin-left: 3px;
 }
 
-.DataDivLeft {
-    display: flex;
-    margin: auto;
-    margin-left: 3px;
-    width: 44%;
-}
-
-.DataDivRight {
+.DataDivContent {
     display: flex;
     margin: 0;
     padding: auto;
     width: 80%;
     background-color: #fffff0;
+}
+
+.DataDivItemName {
+    display: flex;
+    margin: auto;
+    margin-left: 3px;
+    width: 44%;
+    cursor: pointer;
+}
+
+.DataDivItemName:hover {
+    color: blue;
+    font-weight: bold;
 }
 
 .DataDivHex {
@@ -43,6 +49,10 @@
     padding: auto;
     width: 80%;
     background-color: #fffff0;
+}
+
+.SelectedDataItem {
+    background-color: skyblue;
 }
 
 .GridDataContent{
@@ -99,14 +109,14 @@
     opacity: 0;
 }
 
-.Fixed {
+.Pinned {
     font-weight: bold;
 }
 
 .DataItemsList {
     position: relative;
     overflow-y: scroll;
-    width: 100%;
+    width: 98.5%;
     height: 70%;
     padding-left: 10px;
 }
